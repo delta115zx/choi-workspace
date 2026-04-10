@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // 0, 1, 2...   : for
+            // 배열탐색     : for - of   -> Python의 for문
+            // 반복조건     : while      -> Python의 while문
+            // 반복조건     : do - while -> 안쓸거라서
+
+            var dogs = [
+                { name: "후추", age: 2 },
+                { name: "호초", age: 3 },
+                { name: "하차", age: 1 }
+            ];
+
+
+            $("#b1").click(function () {
+                for (var i = 0; i < dogs.length; i++) {
+                    alert(dogs[i].name + " : " + dogs[i].age);
+                }
+            });
+
+            $("#b2").click(function () {
+                for (var d of dogs) {
+                    alert(d.name + " : " + d.age);
+                }
+            });
+
+            $("#b3").click(function () {
+                // JS컬렉션 탐색용 -> JSON파싱
+                // $.each(배열명, function(인덱스, 값){});
+                $.each(dogs, function (iii, ddd) {
+                    // alert(iii);
+                    // alert(ddd);
+                    // alert(dogs[iii].name + " : " + dogs[iii].age);
+                    alert(ddd.name + " : " + ddd.age);
+                });
+            });
+
+            $("#b4").click(function () {
+                // DOM객체 탐색용 -> XML파싱
+                // $(선택자).each(function(인덱스, 값){});
+                $("button").each(function (iiii, bbbb) {
+                    $(bbbb).css("font-size", (iiii + 1) * 10 + "pt")
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <button id="b1">컬렉션 탐색(for)</button>
+    <button id="b2">컬렉션 탐색(for - of)</button>
+    <button id="b3">컬렉션 탐색(for + for - of)</button>
+    <hr>
+    <button id="b4">DOM객체 탐색</button>
+</body>
+
+</html>

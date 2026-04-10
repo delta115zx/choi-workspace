@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
+    "react-redux": "^9.2.0",
+    "socket.io": "^2.5.1",
+    "socket.io-client": "2"
+  }
+}

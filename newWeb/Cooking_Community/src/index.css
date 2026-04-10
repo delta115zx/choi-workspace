@@ -1,0 +1,33 @@
+@font-face {
+   font-family: "blackF";
+   src: url("A블랙B.TTF");
+}
+
+@font-face {
+   font-family: "dawn";
+   src: url("A새벽M.TTF");
+}
+
+input {
+   font-family: "blackF";
+   outline: none;
+}
+
+input::placeholder {
+   font-family: "dawn";
+}
+
+textarea {
+   font-family: "blackF";
+   outline: none;
+}
+
+textarea::placeholder {
+   font-family: "dawn";
+}
+
+button {
+   font-family: "dawn";
+   cursor: pointer;
+   outline: none;
+}

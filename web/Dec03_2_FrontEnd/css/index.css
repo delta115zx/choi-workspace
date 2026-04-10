@@ -1,0 +1,23 @@
+#titleImg {
+    width: 100%;
+}
+
+#sellerPageControlTbl {
+    width: 100%;
+}
+
+#productPageControlTbl {
+    width: 100%;
+}
+
+#productPageControlTbl a {
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#sellerPageControlTbl a {
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}

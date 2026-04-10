@@ -1,0 +1,64 @@
+소스 수정하면 껏다켜야함 (--reload로 자동재시작)
+uvicorn abc:app --host=0.0.0.0 --port=9999 --reload
+
+1. 설치
+	node.js본체 설치
+
+	패키지 설치
+		npm install 이름 옵션
+			-g : Node.js본체에 add-on
+			   : 프로젝트에 add-on	
+
+	nodemon(소스 수정시 자동재시작 add-on)
+		npm install nodemon -g
+
+	express(웹 백엔드 프로젝트 자동생성 add-on)
+		npm install express -g
+		npm install express-generator@4 -g
+
+2. 프로젝트 생성
+	프로젝트 만들곳에 가서 cmd
+	2-1)  프로젝트 만들기
+		express 프로젝트명
+			express Dec08_1_NodeJSTest
+	2-2) 기본 라이브러리 설치
+		cd 프로젝트명
+			cd Dec08_1_NodeJSTest
+		npm install
+	2-3) app.js파일 편집
+
+3. 실행
+	nodemon app.js
+
+flask  - 죽어가는기술
+
+과정이 Python flask
+구인공고 보니 FastAPI를 많이씀 -> 내가따로 공부해서 프로젝트에 도입
+-> Spring이 더 대세인데? ->?
+
+실무 대세는 Spring/SpringBoot
+실무 찾아 보니 FastAPI/Node.js(JavaScript라는 언어로 back-end개발, FastAPI랑 같은 포지션
+, 수많은 개발자들이 add-on을  react, vue, ...를 돌리는 환경으로 많이 사용)
+
+심부름
+고등어 1 -> 5분
+사과 1 -> 3분
+연필 1 -> 2분
+
+이동시간빼고
+
+전략
+전략별시간
+
+사람 : thread 
+	동시에 여러작업할때 만들어서
+	컴에 부하가 걸림
+
+주황 : single-thread blocking I/O - x
+보라 : multi-thread blocking I/O - Spring
+회색 : single-thread non-blocking I/O - FastAPI/Node.js
+
+왜 Spring이 대세?
+실무 : 좋은기술x, 기존에 쓰던거, 안정적
+
+요청

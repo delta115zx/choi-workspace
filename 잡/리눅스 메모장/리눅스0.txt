@@ -1,0 +1,21 @@
+시작 - Windows보안 - 장치 보안
+- 코어 격리 - 코어 격리 세부 정보 - 메모리 무결성 - 끔 - 재부팅
+-----
+VirtualBox로 새 컴 사온것처럼
+-----
+램 : 1.5GB이상 -> 2048MB
+CPU : 1 ~ 2
+HDD : 40GB
+-----
+어댑터 2 추가
+Attached to 호스트 전용 어댑터
+Promiscuous Mode 가상 머신에 허용
+-----
+저장소쪽 가서 
+ubuntu-18.04.6-desktop-amd64.iso선택
+-----
+Install Ubuntu
+Seoul
+계정
+-----
+장치 - 광학 드라이브 - Remove ...하고 껐다가 다시

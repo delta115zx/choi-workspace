@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1127</title>
+    <style>
+        table {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+
+        td {
+            padding: 20px;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // this : 이벤트가 발생한 객체(콜백함수를 호출한 범인)
+
+            // .parent() : 한단계 상위
+            // .closest("CSS선택자") : 상위로 올라가다가 가장 가까운 그거
+
+            // .children() : 한단계 하위들
+            // .find("CSS선택자") : 하위로 내려가다가 가장 가까운 그거
+
+            $("button").click(function () {
+                $(this).css("background-color", "red");
+                $(this).parent().css("background-color", "green");
+                $(this).closest("table").css("width", "500px");
+                alert($(this).parent().find("input").val());
+            });
+
+            // td클릭하면 클릭한 td글자색 파랑
+            $("td").click(function () {
+                $(this).children().css("color", "blue")
+                $(this).find("input").css("background-color", "yellow")
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <td>
+                <input>
+                <button>버튼</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input>
+                <button>버튼</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input>
+                <button>버튼</button>
+            </td>
+        </tr>
+    </table>
+    <table border="1">
+        <tr>
+            <td>
+                <input>
+                <button>버튼</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input>
+                <button>버튼</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input>
+                <button>버튼</button>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

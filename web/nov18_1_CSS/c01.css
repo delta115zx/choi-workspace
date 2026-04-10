@@ -1,0 +1,32 @@
+body {
+    background-color: lightblue;
+}
+
+div {
+    /* 색깔 두께 선종류
+        선종류
+            solid double
+            dotted dashed
+            inset outset
+            ridge groove
+    */
+    border: orange 5px solid;
+    width: 300px;
+    height: 200px;
+    margin-left: 30px;
+    padding: 20px;
+    position: fixed;
+    left: 50px;
+    top: 50px;
+    background-color: #2E7D32;
+    z-index: 1;
+}
+h1{
+    width: 200px;
+    height: 200px;
+    background-color: #66BB6A;
+    position: fixed;
+    left: 100px;
+    top: 70px;
+    z-index: 99;
+}

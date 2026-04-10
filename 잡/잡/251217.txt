@@ -1,0 +1,34 @@
+DB
+OracleDB - on-premise
+
+Back-end
+FastAPI - on-premise/azure
+Node.js - on-premise/azure
+AI - H200/MS Azure ???
+
+Front-end
+React - on-premise/azure
+
+
+취업반
+
+신입에게 뭘
+	엄청난 개발 실력 -x, 필요도 없고
+	복잡한 알고리즘
+
+	앞으로 회사에 도움될 가능성 - 인성, 기술적 욕심
+	못됐다 - x
+	착한데, 개념없는 - x
+	착한데, 왕따 - x
+
+첫 직장
+	큰회사(솔루션) : 
+	작은회사(SI,파견) : 본인의 실력 쌓기, 인맥쌓기
+
+대기업
+	통화녹음만
+
+중소기업 차장
+	언어는 개발자가 선택하는게 아니다
+
+

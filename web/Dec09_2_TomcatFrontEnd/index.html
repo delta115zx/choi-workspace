@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1209</title>
+    <script src="jQuery.js"></script>
+    <script src="http://195.168.9.200:8888/socket.io/socket.io.js"></script>
+    <script>
+        function getProduct(p, searchTxt) {
+            $.ajax({
+                url: "http://195.168.9.200:7777/product.get",
+                data: { "pageNo": p, "search": searchTxt },
+                success: function (getResult) {
+                    $("table").empty()
+                    $.each(getResult.products, function (i, p) {
+                        var td1 = $("<td></td>").text(p.name);
+                        var td2 = $("<td></td>").text(p.price);
+                        var tr = $("<tr></tr>").append(td1, td2);
+                        $("#productBBS").append(tr)
+                    });
+                    $("#productPageControlTbl td").empty();
+                    for (var i = 1; i <= getResult.pageCount; i++) {
+                        var c = ""
+                        var td = $("<td></td>").attr("onclick", "getProduct(" + i + ", " + c + ");").text(i);
+                        $("#productPageControlTbl").append(td);
+                    }
+                }
+            })
+        }
+
+        $(function () {
+            var socket = io.connect("http://195.168.9.200:8888")
+            var searchTxt = ""
+
+            getProduct(1, searchTxt)
+            $("button").click(function () {
+                var name = $("#nameInput").val()
+                var price = $("#priceInput").val()
+
+                $.ajax({
+                    url: "http://195.168.9.200:7777/product.reg",
+                    data: { "name": name, "price": price },
+                    success: function (regResult) {
+                        socket.emit("reg", "ok")
+                        alert(regResult.result);
+                        getProduct(1, searchTxt)
+                    }
+                })
+                $("#nameInput").val("");
+                $("#priceInput").val("");
+            });
+
+            socket.on("reg2", function (msg) {
+                getProduct(1, searchTxt);
+            })
+
+            $("#searchInput").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    searchTxt = $("#searchInput").val()
+                }
+                getProduct(1, searchTxt)
+            })
+        });
+    </script>
+</head>
+
+<body>
+    품명<input id="nameInput"><br>
+    가격<input id="priceInput"><br>
+    <button>등록</button>
+    <hr>
+    검색<input id="searchInput"><br>
+    <table id="productBBS" border="1">
+
+    </table>
+    <hr>
+    <table id="productPageControlTbl" border="1">
+        <tr></tr>
+    </table>
+</body>
+
+</html>

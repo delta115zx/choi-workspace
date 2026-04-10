@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1127</title>
+    <style>
+        canvas {
+            border: black solid 2px;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            var paper = document.getElementById("cv");
+            var pen = paper.getContext("2d");
+            var ddd = false
+
+            $("#cv").mousedown(function (d) {
+                if(d.button == 0) {
+                    ddd = true;
+                };
+            });
+            
+            $("#cv").mouseup(function (u) {
+                if(u.button == 0) {
+                    ddd = false;
+                };
+            });
+
+            $("#cv").mousemove(function (a) {
+                if (ddd == true) {
+                    pen.fillRect(a.pageX, a.pageY, 10, 10);
+                    // pen.beginPath();
+                    // pen.moveTo(a.pageX, a.pageY);
+                    // pen.lineTo(a.pageX+1, a.pageY+1);
+                    // pen.closePath();
+                    // pen.stroke();      
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <canvas id="cv" width="300px" height="400px"></canvas>
+</body>
+
+</html>

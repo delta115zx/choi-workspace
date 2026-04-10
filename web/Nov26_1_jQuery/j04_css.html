@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <style>
+        h1 {
+            color: red;
+        }
+
+        img {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transition: all 0.5s ease-in;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        // JavaScript : 이벤트 처리, HTML DOM객체 동적으로 수정
+        $(function () {
+            $("#b1").click(function () {
+                // CSS 추가/수정
+                // $(선택자).css("속성명", "값");
+                $("h1").css("color", "green");
+            });
+
+            var red = true;
+            $("#b2").click(function () {
+                if (red) {
+                    $("h1").css("color", "blue");
+                } else {
+                    $("h1").css("color", "red");
+                }
+                red = !red;
+            });
+
+            $("#b3").click(function () {
+                var c = $("h1").css("color");
+                if (c == "rgb(255, 0, 0)") {
+                    $("h1").css("color", "blue");
+                } else {
+                    $("h1").css("color", "red");
+                }
+            });
+
+            $("#b4").click(function () {
+                // $("h1").css("background-color", "yellow");
+                // $("h1").css("color", "black");
+                $("h1").css("background-color", "yellow").css("color", "black");
+            });
+            var t;
+            $("#b5").click(function () {
+                // setTimeout(function () {
+                //     var x = Math.random() * 1000;
+                //     var y = Math.random() * 1000;
+                //     $("img").css("left",  x + "px").css("top", y + "px")
+                // }, 2000);
+                t = setInterval(function () {
+                    var x = Math.random() * 1000;
+                    var y = Math.random() * 1000;
+                    $("img").css("left", x + "px").css("top", y + "px")
+                }, 1000);
+            });
+            $("h1").click(function () {
+                clearInterval(t);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>ㅋㅋㅋ</h1>
+    <button id="b1">글자색 수정</button>
+    <button id="b2">글자색 수정</button>
+    <button id="b3">글자색 수정</button>
+    <button id="b4">배경색 수정</button>
+    <hr>
+    <img src="android_normal.png">
+    <button id="b5">ㄱㄱ</button>
+</body>
+
+</html>

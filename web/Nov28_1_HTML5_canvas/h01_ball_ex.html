@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1128</title>
+    <style>
+        canvas {
+            border: black solid 2px;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            var paper = document.getElementById("cv");
+            var pen = paper.getContext("2d");
+            var ball = new Image();
+            ball.src = "ball.png";
+            var ballX = 135; var ballY = 185; var barX = 100;
+            var xSpd = 7; var ySpd = 7;
+            var xx = $("#cv").offset().left + 2;
+
+            ball.onload = function () {
+                var t = setInterval(function () {
+                    pen.save();
+
+                    pen.fillStyle = "#00000009";
+                    pen.fillRect(0, 0, 300, 400);
+
+                    pen.shadowOffsetX = 0; pen.shadowOffsetY = 0;
+                    pen.shadowBlur = 10; pen.shadowColor = "orange";
+
+                    if (ballX <= 0 || ballX >= 270) {
+                        xSpd *= -1;
+                    }
+
+                    if (ballY <= 0) {
+                        ySpd *= -1;
+                    }
+
+                    if (ballY >= 355 && 
+                        ballX >= barX - 15 &&
+                        ballX <= barX + 85) {
+                        ySpd *= -1;
+                    }
+
+                    if (ballY >= 370) {
+                        clearInterval(t);
+                    }
+
+                    ballX += xSpd; ballY += ySpd;
+
+                    pen.drawImage(ball, ballX, ballY);
+
+                    pen.shadowColor = "white"
+                    pen.fillStyle = "red"
+                    pen.fillRect(barX, 385, 100, 15)
+
+                    pen.restore();
+                }, 30);
+
+                $("#cv").mousemove(function (e) {
+                    barX = e.pageX - xx - 50;
+                });
+            };
+        });
+    </script>
+</head>
+
+<body>
+    <canvas id="cv" width="300px" height="400px"></canvas>
+</body>
+
+</html>

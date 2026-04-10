@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <script>
+        // 작업형태가 함수정의 -> DOM객체의 onXXX연결
+        // 1) DOM객체를 찾아가야하는 불편함
+        // 2) 같은 이벤트 여러군데 연결 : 일일히 노가다
+        
+        // 문법 + 인터프리터 방식
+        // 3) 문법이 길다 + 에러잡기 힘들다
+        // 4) main영역이 따로 없어서
+        //      body의 load이벤트(body에 있는거 화면에 다 나오고 나서)를 활용
+
+        // Python개발자 입장에서 
+        // 5) 변수 사용범위가 있다
+
+        // -> vanilla JS가 개발자들에게 외면을 받아왔음
+        //  -> 저런 단점들을 해결한 라이브러리들이 나오면서 상황역전
+        var a;
+        function abcd() {
+            a = document.getElementById("zvxc");
+        } 
+        function showAlertt() {
+            alert(a.value);
+        }
+    </script>
+</head>
+
+<body onload="abcd();">
+    <input id="zvxc"><br>
+    <button onclick="showAlertt();">버튼</button>
+</body>
+
+</html>

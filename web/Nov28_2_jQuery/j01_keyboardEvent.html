@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1128</title>
+    <style>
+        h2 {
+            position: absolute;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // keydown
+            // keyup
+            $("input").keydown(function (e) {
+                if (e.keyCode == 65) {
+                    return false;
+                }
+                // e.keyCode : 키보드 아스키값
+                $("h1").text("keydown : " + e.keyCode);
+            });
+            $("input").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    alert("엔터침")
+                }
+                $("h1").text("keyup : " + e.keyCode);
+            });
+
+            $("html").keydown(function (e) {
+                if (e.keyCode == 39) {
+                    var x = $("h2").offset().left + 3;
+                    $("h2").css("left", x + "px")
+                } else if (e.keyCode == 37) {
+                    var x2 = $("h2").offset().left - 3;
+                    $("h2").css("left", x2 + "px")
+                } else if (e.keyCode == 38) {
+                    var y = $("h2").offset().top - 30;
+                    $("h2").css("top", y + "px")
+                } else if (e.keyCode == 40) {
+                    var y2 = $("h2").offset().top + 30;
+                    $("h2").css("top", y2 + "px")
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <input>
+    <h1></h1>
+    <h2>ㅎㅎㅎ</h2>
+</body>
+
+</html>

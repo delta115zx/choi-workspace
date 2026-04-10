@@ -1,0 +1,10 @@
+MachineLearning
+ : 알고리즘을 지정해주자
+DeepLearning
+ : CNN, W/b알아내게
+
+그 알고리즘 어떻게 돌아가나
+어디에 쓰면 유리
+분류 kNN...?
+
+AutoML

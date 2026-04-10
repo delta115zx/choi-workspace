@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1127</title>
+    <script src="jQuery.js"></script>
+    <script>
+        // jQuery써서 동적으로 추가된 DOM객체들 이벤트 처리?
+        // 콜백함수에 파라메터 값?
+
+        // body에 있는게 화면에 다 뜨고나서(body의 onload)
+        // $(function () {
+        //     // 모든 button들의 클릭이벤트에 aaa함수 연결해두기
+        //     $("button").click(function aaa() {
+        //         var b = $("<button></button>").text("버튼");
+        //         $("body").append(b);
+        //     });
+        // });
+
+        function addBtn() {
+            var b = $("<button></button>").text("버튼").attr("onclick", "addBtn();");
+            $("body").append(b);
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="addBtn();">버튼</button>
+</body>
+
+</html>

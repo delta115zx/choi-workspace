@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1120</title>
+    <script>
+        var a = 4;
+        if (a > 5) {
+            alert("5 초과");
+        } else if (a > 3) {
+            alert("3 < a < 5");
+        } else {
+            alert("나머지");
+        }
+        ///////////////
+        // switch (변수) {
+        //      case 값:
+        //          내용
+        //          break;
+        //      ...
+        //      default:
+        //          내용
+        //          break;
+        // }
+        // 언제 switch-case : 권한설정
+        // Python은 왜없지? : 효율적인거에 관심x 공부할거 줄이자 대체할수있으면 삭제
+        switch (a) {
+            case 4:
+                alert("a는 4")
+                alert("ㅋㅋ")
+                break;
+            case 10:
+                alert("a는 10")
+                break;
+            default:
+                alert("나머지");
+                break;
+        }
+
+        var role = "DBU";
+        switch (role) {
+            case "DBA":
+                alert("계정/전원관리");
+            case "DBP":
+                alert("데이터CRUD");
+            case "DBU":
+                alert("서비스이용");
+        }
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

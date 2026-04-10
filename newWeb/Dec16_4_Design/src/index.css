@@ -1,0 +1,8 @@
+@font-face {
+   font-family: "sam3";
+   src: url("./cdf/Sam3KRFont.ttf");
+}
+
+div {
+    text-decoration: underline;
+}

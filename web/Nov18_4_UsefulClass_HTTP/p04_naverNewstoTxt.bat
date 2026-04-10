@@ -1,0 +1,1 @@
+python p04_naverNewstoTxt.py

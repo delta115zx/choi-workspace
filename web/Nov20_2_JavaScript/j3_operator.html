@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1120</title>
+    <script>
+        // 대부분 Python과 같음
+        var a = 10;
+        var b = "ㅋ";
+
+        var c = a + b;  // 붙여서 글자로(P : 에러)
+        alert(c);
+
+        var d = a * b; // 안됨(P : 반복)
+        alert(d);
+
+        // a = a + 1;
+        // a += 1;
+        a++;
+        alert(a);
+
+        // a = a - 1;
+        // a -= 1;
+        a--;
+        alert(a);
+
+        // and : &&, &
+        // or : ||, |
+        // not : !
+        //  a가 5이상, b가 ㅋ
+        var e = (a >= 5) && (b == "ㅋ");
+        alert(e);
+
+        // a가 5이상이면 ㅋ, 아니면 ㅎ
+        // 삼항연산
+        //      조건식 ? 참일때값 : 거짓일때값
+        var f = (a >= 5) ? "ㅋ" : "ㅎ";
+        alert(f);
+
+    </script>
+</head>
+
+<body>
+   
+</body>
+
+</html>

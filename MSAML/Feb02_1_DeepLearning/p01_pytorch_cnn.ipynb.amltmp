@@ -1,0 +1,302 @@
+{
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [
+        "# CNN(Convolutional NN)\n",
+        "#   kernel/filter로 긁어가면서 \n",
+        "#       -> 주변만 연결 \n",
+        "#       -> 신경망을 적절히 잘 끊어가면서 위치 정보를 살림\n",
+        "#   다양한 특성을 가진 kernel여러개로 긁어서 channel축으로 쌓아\n",
+        "#       -> 다양한 특성 추출 가능\n",
+        "#   padding : 데이터 바깥쪽에 추가해서, kernel로 긁어도 사이즈 줄어들지 않게\n",
+        "#   stride : kernel 얼마씩 움직일지\n",
+        "#   pooling(max pooling/avg pooling) : 중요한 특징만 골라내서\n",
+        "#   여러층의 CNN을 통과하고 마지막에 FC Layer(Fully Connected Layer)통과\n",
+        "#       -> 적절히 끊어가면서 위치별로 봤던거, 최종적으로는 다 보고 결론내게"
+      ],
+      "outputs": [],
+      "execution_count": null,
+      "metadata": {},
+      "id": "58b5f967"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import torch\n",
+        "from torch import nn, optim, accelerator\n",
+        "from torch.utils.data import Dataset, DataLoader\n",
+        "import numpy as np\n",
+        "import cv2\n",
+        "import os\n",
+        "from random import random"
+      ],
+      "outputs": [],
+      "execution_count": 1,
+      "metadata": {
+        "gather": {
+          "logged": 1770003532129
+        }
+      },
+      "id": "4384cc4f"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "if accelerator.is_available():\n",
+        "    device = accelerator.current_accelerator()\n",
+        "else:\n",
+        "    device = \"cpu\"\n",
+        "\n",
+        "print(device)"
+      ],
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": "cpu\n"
+        }
+      ],
+      "execution_count": 2,
+      "metadata": {
+        "gather": {
+          "logged": 1770003534415
+        }
+      },
+      "id": "6788595b"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# 전체 데이터 30%정도는 학습용x, 테스트용\n",
+        "def getImg(folder, w, h, yData):\n",
+        "    trainData = []\n",
+        "    trainLabel = []\n",
+        "    testData = []\n",
+        "    testLabel = []\n",
+        "    for i, f in enumerate(os.listdir(folder)):\n",
+        "        data = cv2.imread(folder + f, cv2.IMREAD_COLOR)\n",
+        "        data = cv2.resize(data, (w, h))\n",
+        "        if random() < 0.3:\n",
+        "            testData.append(np.array(data, dtype=np.float32))\n",
+        "            testLabel.append(yData[i])\n",
+        "        else:\n",
+        "            trainData.append(np.array(data, dtype=np.float32))\n",
+        "            trainLabel.append(yData[i])\n",
+        "    return trainData, trainLabel, testData, testLabel"
+      ],
+      "outputs": [],
+      "execution_count": 3,
+      "metadata": {
+        "gather": {
+          "logged": 1770003536411
+        }
+      },
+      "id": "5a6a8d41"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class KwonBunsikDataset(Dataset):\n",
+        "    def __init__(self, data, label, numClasses):\n",
+        "        super().__init__()\n",
+        "        self.datas = torch.from_numpy(np.array(data)) # 18개 x 50행 x 100열 x 3색\n",
+        "        self.datas = self.datas.permute(0, 3, 1, 2) # 18 x 50 x 100 x 3 -> 18 x 3 x 50 x 100\n",
+        "        self.labels = torch.from_numpy(np.array(label))\n",
+        "        self.labels = torch.nn.functional.one_hot(self.labels, numClasses)\n",
+        "        self.labels = self.labels.type(torch.float32)\n",
+        "\n",
+        "    def __len__(self):\n",
+        "        return len(self.datas) # 전체 갯수 리턴\n",
+        "\n",
+        "    def __getitem__(self, index):\n",
+        "        return self.datas[index], self.labels[index] # (데이터, 라벨) 튜플형태로 리턴"
+      ],
+      "outputs": [],
+      "execution_count": 4,
+      "metadata": {
+        "gather": {
+          "logged": 1770003538934
+        }
+      },
+      "id": "67b92e0b"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%pwd"
+      ],
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "execution_count": 6,
+          "data": {
+            "text/plain": "'/mnt/batch/tasks/shared/LS_root/mounts/clusters/teacher023/code/Users/teacher02/Feb02_1_DeepLearning'"
+          },
+          "metadata": {}
+        }
+      ],
+      "execution_count": 6,
+      "metadata": {},
+      "id": "5c172480-6f53-4035-9bf6-1c90ef6394ce"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "label = [\"떡볶이\", \"오뎅\", \"김밥\", \"튀김\", \"순대\"]\n",
+        "yData = [0,0,0,0,0, 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4]\n",
+        "trainData, trainLabel, testData, testLabel = getImg(\"/mnt/batch/tasks/shared/LS_root/mounts/clusters/teacher023/code/Users/teacher02/Feb02_1_DeepLearning/bunsikMenu/\", 100, 50, yData)\n",
+        "\n",
+        "trainDataset = KwonBunsikDataset(trainData, trainLabel, 5)\n",
+        "testDataset = KwonBunsikDataset(testData, testLabel, 5)\n",
+        "trainDataLoader = DataLoader(trainDataset, 3, True) # trainDataset에서 3개씩(batch size) 순서섞어서\n",
+        "testDataLoader = DataLoader(testDataset, 3, True)"
+      ],
+      "outputs": [],
+      "execution_count": 8,
+      "metadata": {
+        "gather": {
+          "logged": 1770003578695
+        }
+      },
+      "id": "47f18d3f"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class KwonBunsikCNN(nn.Module):\n",
+        "    def __init__(self):\n",
+        "        super().__init__()\n",
+        "        self.kbcnn = nn.Sequential(\n",
+        "            nn.Conv2d(3, 1000, 5), # in채널(R, G, B), out채널, 5\n",
+        "            nn.ReLU(),\n",
+        "            nn.Conv2d(1000, 500, 5),\n",
+        "            nn.ReLU(),\n",
+        "            nn.Conv2d(500, 100, 5),\n",
+        "            nn.ReLU(),\n",
+        "            nn.Conv2d(100, 50, 5),\n",
+        "            nn.ReLU()\n",
+        "        )\n",
+        "        self.f = nn.Flatten()\n",
+        "        self.nn = nn.Sequential(\n",
+        "            nn.Linear(142800, 10),\n",
+        "            nn.ReLU(),\n",
+        "            nn.Linear(10, 5)\n",
+        "        )\n",
+        "\n",
+        "    def forward(self, x):\n",
+        "        myModel = self.kbcnn(x)\n",
+        "        myModel = self.f(myModel)\n",
+        "        myModel = self.nn(myModel)\n",
+        "        return myModel"
+      ],
+      "outputs": [],
+      "execution_count": 14,
+      "metadata": {
+        "gather": {
+          "logged": 1770003680666
+        }
+      },
+      "id": "cd532cfe"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "model = KwonBunsikCNN().to(device)\n",
+        "\n",
+        "lossFn = nn.CrossEntropyLoss()\n",
+        "o = optim.Adam(model.parameters(), lr=0.001)"
+      ],
+      "outputs": [],
+      "execution_count": 15,
+      "metadata": {
+        "gather": {
+          "logged": 1770003683449
+        }
+      },
+      "id": "90cff0d9"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "model.train()\n",
+        "\n",
+        "for epoch in range(100):\n",
+        "    for x, y in trainDataLoader:\n",
+        "        x = x.to(device)\n",
+        "        y = y.to(device)\n",
+        "\n",
+        "        predY = model(x)\n",
+        "        l = lossFn(predY, y)\n",
+        "\n",
+        "        o.zero_grad()\n",
+        "        l.backward()\n",
+        "        o.step()\n",
+        "\n",
+        "        print(l.item())"
+      ],
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": "1.836649775505066\n5145.81103515625\n1466.3612060546875\n203.56263732910156\n193.48828125\n1.5033851861953735\n1.6041542291641235\n1.6266632080078125\n1.5746946334838867\n1.6832990646362305\n1.5790165662765503\n1.6458944082260132\n1.6026688814163208\n1.65056574344635\n1.6077162027359009\n1.5796269178390503\n1.6449168920516968\n1.6259632110595703\n1.6784731149673462\n1.672236442565918\n1.7027034759521484\n1.5973511934280396\n1.504611611366272\n"
+        },
+        {
+          "output_type": "error",
+          "ename": "KeyboardInterrupt",
+          "evalue": "",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mKeyboardInterrupt\u001b[0m                         Traceback (most recent call last)",
+            "Cell \u001b[0;32mIn[16], line 8\u001b[0m\n\u001b[1;32m      5\u001b[0m x \u001b[38;5;241m=\u001b[39m x\u001b[38;5;241m.\u001b[39mto(device)\n\u001b[1;32m      6\u001b[0m y \u001b[38;5;241m=\u001b[39m y\u001b[38;5;241m.\u001b[39mto(device)\n\u001b[0;32m----> 8\u001b[0m predY \u001b[38;5;241m=\u001b[39m \u001b[43mmodel\u001b[49m\u001b[43m(\u001b[49m\u001b[43mx\u001b[49m\u001b[43m)\u001b[49m\n\u001b[1;32m      9\u001b[0m l \u001b[38;5;241m=\u001b[39m lossFn(predY, y)\n\u001b[1;32m     11\u001b[0m o\u001b[38;5;241m.\u001b[39mzero_grad()\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/module.py:1776\u001b[0m, in \u001b[0;36mModule._wrapped_call_impl\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1774\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_compiled_call_impl(\u001b[38;5;241m*\u001b[39margs, \u001b[38;5;241m*\u001b[39m\u001b[38;5;241m*\u001b[39mkwargs)  \u001b[38;5;66;03m# type: ignore[misc]\u001b[39;00m\n\u001b[1;32m   1775\u001b[0m \u001b[38;5;28;01melse\u001b[39;00m:\n\u001b[0;32m-> 1776\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43m_call_impl\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43margs\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43mkwargs\u001b[49m\u001b[43m)\u001b[49m\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/module.py:1787\u001b[0m, in \u001b[0;36mModule._call_impl\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1782\u001b[0m \u001b[38;5;66;03m# If we don't have any hooks, we want to skip the rest of the logic in\u001b[39;00m\n\u001b[1;32m   1783\u001b[0m \u001b[38;5;66;03m# this function, and just call forward.\u001b[39;00m\n\u001b[1;32m   1784\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m (\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_backward_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_backward_pre_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_forward_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_forward_pre_hooks\n\u001b[1;32m   1785\u001b[0m         \u001b[38;5;129;01mor\u001b[39;00m _global_backward_pre_hooks \u001b[38;5;129;01mor\u001b[39;00m _global_backward_hooks\n\u001b[1;32m   1786\u001b[0m         \u001b[38;5;129;01mor\u001b[39;00m _global_forward_hooks \u001b[38;5;129;01mor\u001b[39;00m _global_forward_pre_hooks):\n\u001b[0;32m-> 1787\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[43mforward_call\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43margs\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43mkwargs\u001b[49m\u001b[43m)\u001b[49m\n\u001b[1;32m   1789\u001b[0m result \u001b[38;5;241m=\u001b[39m \u001b[38;5;28;01mNone\u001b[39;00m\n\u001b[1;32m   1790\u001b[0m called_always_called_hooks \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mset\u001b[39m()\n",
+            "Cell \u001b[0;32mIn[14], line 22\u001b[0m, in \u001b[0;36mKwonBunsikCNN.forward\u001b[0;34m(self, x)\u001b[0m\n\u001b[1;32m     21\u001b[0m \u001b[38;5;28;01mdef\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[38;5;21mforward\u001b[39m(\u001b[38;5;28mself\u001b[39m, x):\n\u001b[0;32m---> 22\u001b[0m     myModel \u001b[38;5;241m=\u001b[39m \u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mkbcnn\u001b[49m\u001b[43m(\u001b[49m\u001b[43mx\u001b[49m\u001b[43m)\u001b[49m\n\u001b[1;32m     23\u001b[0m     myModel \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mf(myModel)\n\u001b[1;32m     24\u001b[0m     myModel \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mnn(myModel)\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/module.py:1776\u001b[0m, in \u001b[0;36mModule._wrapped_call_impl\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1774\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_compiled_call_impl(\u001b[38;5;241m*\u001b[39margs, \u001b[38;5;241m*\u001b[39m\u001b[38;5;241m*\u001b[39mkwargs)  \u001b[38;5;66;03m# type: ignore[misc]\u001b[39;00m\n\u001b[1;32m   1775\u001b[0m \u001b[38;5;28;01melse\u001b[39;00m:\n\u001b[0;32m-> 1776\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43m_call_impl\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43margs\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43mkwargs\u001b[49m\u001b[43m)\u001b[49m\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/module.py:1787\u001b[0m, in \u001b[0;36mModule._call_impl\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1782\u001b[0m \u001b[38;5;66;03m# If we don't have any hooks, we want to skip the rest of the logic in\u001b[39;00m\n\u001b[1;32m   1783\u001b[0m \u001b[38;5;66;03m# this function, and just call forward.\u001b[39;00m\n\u001b[1;32m   1784\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m (\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_backward_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_backward_pre_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_forward_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_forward_pre_hooks\n\u001b[1;32m   1785\u001b[0m         \u001b[38;5;129;01mor\u001b[39;00m _global_backward_pre_hooks \u001b[38;5;129;01mor\u001b[39;00m _global_backward_hooks\n\u001b[1;32m   1786\u001b[0m         \u001b[38;5;129;01mor\u001b[39;00m _global_forward_hooks \u001b[38;5;129;01mor\u001b[39;00m _global_forward_pre_hooks):\n\u001b[0;32m-> 1787\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[43mforward_call\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43margs\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43mkwargs\u001b[49m\u001b[43m)\u001b[49m\n\u001b[1;32m   1789\u001b[0m result \u001b[38;5;241m=\u001b[39m \u001b[38;5;28;01mNone\u001b[39;00m\n\u001b[1;32m   1790\u001b[0m called_always_called_hooks \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mset\u001b[39m()\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/container.py:253\u001b[0m, in \u001b[0;36mSequential.forward\u001b[0;34m(self, input)\u001b[0m\n\u001b[1;32m    249\u001b[0m \u001b[38;5;250m\u001b[39m\u001b[38;5;124;03m\"\"\"\u001b[39;00m\n\u001b[1;32m    250\u001b[0m \u001b[38;5;124;03mRuns the forward pass.\u001b[39;00m\n\u001b[1;32m    251\u001b[0m \u001b[38;5;124;03m\"\"\"\u001b[39;00m\n\u001b[1;32m    252\u001b[0m \u001b[38;5;28;01mfor\u001b[39;00m module \u001b[38;5;129;01min\u001b[39;00m \u001b[38;5;28mself\u001b[39m:\n\u001b[0;32m--> 253\u001b[0m     \u001b[38;5;28minput\u001b[39m \u001b[38;5;241m=\u001b[39m \u001b[43mmodule\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;28;43minput\u001b[39;49m\u001b[43m)\u001b[49m\n\u001b[1;32m    254\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28minput\u001b[39m\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/module.py:1776\u001b[0m, in \u001b[0;36mModule._wrapped_call_impl\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1774\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_compiled_call_impl(\u001b[38;5;241m*\u001b[39margs, \u001b[38;5;241m*\u001b[39m\u001b[38;5;241m*\u001b[39mkwargs)  \u001b[38;5;66;03m# type: ignore[misc]\u001b[39;00m\n\u001b[1;32m   1775\u001b[0m \u001b[38;5;28;01melse\u001b[39;00m:\n\u001b[0;32m-> 1776\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43m_call_impl\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43margs\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43mkwargs\u001b[49m\u001b[43m)\u001b[49m\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/module.py:1787\u001b[0m, in \u001b[0;36mModule._call_impl\u001b[0;34m(self, *args, **kwargs)\u001b[0m\n\u001b[1;32m   1782\u001b[0m \u001b[38;5;66;03m# If we don't have any hooks, we want to skip the rest of the logic in\u001b[39;00m\n\u001b[1;32m   1783\u001b[0m \u001b[38;5;66;03m# this function, and just call forward.\u001b[39;00m\n\u001b[1;32m   1784\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;129;01mnot\u001b[39;00m (\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_backward_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_backward_pre_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_forward_hooks \u001b[38;5;129;01mor\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_forward_pre_hooks\n\u001b[1;32m   1785\u001b[0m         \u001b[38;5;129;01mor\u001b[39;00m _global_backward_pre_hooks \u001b[38;5;129;01mor\u001b[39;00m _global_backward_hooks\n\u001b[1;32m   1786\u001b[0m         \u001b[38;5;129;01mor\u001b[39;00m _global_forward_hooks \u001b[38;5;129;01mor\u001b[39;00m _global_forward_pre_hooks):\n\u001b[0;32m-> 1787\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[43mforward_call\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43margs\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[38;5;241;43m*\u001b[39;49m\u001b[43mkwargs\u001b[49m\u001b[43m)\u001b[49m\n\u001b[1;32m   1789\u001b[0m result \u001b[38;5;241m=\u001b[39m \u001b[38;5;28;01mNone\u001b[39;00m\n\u001b[1;32m   1790\u001b[0m called_always_called_hooks \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mset\u001b[39m()\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/conv.py:553\u001b[0m, in \u001b[0;36mConv2d.forward\u001b[0;34m(self, input)\u001b[0m\n\u001b[1;32m    552\u001b[0m \u001b[38;5;28;01mdef\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[38;5;21mforward\u001b[39m(\u001b[38;5;28mself\u001b[39m, \u001b[38;5;28minput\u001b[39m: Tensor) \u001b[38;5;241m-\u001b[39m\u001b[38;5;241m>\u001b[39m Tensor:\n\u001b[0;32m--> 553\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43m_conv_forward\u001b[49m\u001b[43m(\u001b[49m\u001b[38;5;28;43minput\u001b[39;49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mweight\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mbias\u001b[49m\u001b[43m)\u001b[49m\n",
+            "File \u001b[0;32m/anaconda/envs/jupyter_env/lib/python3.10/site-packages/torch/nn/modules/conv.py:548\u001b[0m, in \u001b[0;36mConv2d._conv_forward\u001b[0;34m(self, input, weight, bias)\u001b[0m\n\u001b[1;32m    535\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mpadding_mode \u001b[38;5;241m!=\u001b[39m \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mzeros\u001b[39m\u001b[38;5;124m\"\u001b[39m:\n\u001b[1;32m    536\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m F\u001b[38;5;241m.\u001b[39mconv2d(\n\u001b[1;32m    537\u001b[0m         F\u001b[38;5;241m.\u001b[39mpad(\n\u001b[1;32m    538\u001b[0m             \u001b[38;5;28minput\u001b[39m, \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_reversed_padding_repeated_twice, mode\u001b[38;5;241m=\u001b[39m\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mpadding_mode\n\u001b[0;32m   (...)\u001b[0m\n\u001b[1;32m    545\u001b[0m         \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mgroups,\n\u001b[1;32m    546\u001b[0m     )\n\u001b[0;32m--> 548\u001b[0m \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[43mF\u001b[49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mconv2d\u001b[49m\u001b[43m(\u001b[49m\n\u001b[1;32m    549\u001b[0m \u001b[43m    \u001b[49m\u001b[38;5;28;43minput\u001b[39;49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43mweight\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[43mbias\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mstride\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mpadding\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mdilation\u001b[49m\u001b[43m,\u001b[49m\u001b[43m \u001b[49m\u001b[38;5;28;43mself\u001b[39;49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mgroups\u001b[49m\n\u001b[1;32m    550\u001b[0m \u001b[43m\u001b[49m\u001b[43m)\u001b[49m\n",
+            "\u001b[0;31mKeyboardInterrupt\u001b[0m: "
+          ]
+        }
+      ],
+      "execution_count": 16,
+      "metadata": {
+        "gather": {
+          "logged": 1770003784033
+        }
+      },
+      "id": "05473076"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.10.19",
+      "mimetype": "text/x-python",
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "pygments_lexer": "ipython3",
+      "nbconvert_exporter": "python",
+      "file_extension": ".py"
+    },
+    "kernel_info": {
+      "name": "python3"
+    },
+    "nteract": {
+      "version": "nteract-front-end@1.0.0"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

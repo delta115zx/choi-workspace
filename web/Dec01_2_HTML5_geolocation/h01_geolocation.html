@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1201</title>
+    <script>
+        // GPS있는 디바이스 : GPS
+        // GPS없는 디바이스 : IP주소
+        // 서버 안쓰고 html단독실행 - o
+        // 서버에 올리면
+        //      http - x
+        //      https - o
+        navigator.geolocation.getCurrentPosition(function(locc){
+            alert(locc.coords.latitude); // 위도
+            alert(locc.coords.longitude); // 경도
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

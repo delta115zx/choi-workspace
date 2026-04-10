@@ -1,0 +1,9 @@
+딜레이
+    setTimeout(콜백함수, 시간(밀리초));
+
+반복
+    var 변수 = setInterval(콜백함수, 시간(밀리초));
+    clearInterval(변수);
+
+랜덤(0.0 ~ 0.999999)
+    Math.random();

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1127</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            border: black solid 3px;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // <태그명 속성명="값" 속성명="값" ... >텍스트</태그명>
+            $("#b1").click(function () {
+                $("a").text("<b>구글로</b>");
+                // $("a").html("<b>구글로</b>");
+            });
+            $("#b2").click(function () {
+                alert($("a").text());
+            });
+            $("#b3").click(function () {
+                $("a").attr("href", "https://www.google.com")
+            });
+            $("#b4").click(function () {
+                alert($("a").attr("href"));
+            });
+            $("#b5").click(function () {
+                // $("a").attr("href", "")
+                $("a").removeAttr("href");
+            });
+            var a = 1
+            setInterval(function () {
+                $("img").attr("src", "hero_walk_0" + a + ".png")
+                a++
+                if (a > 5) {
+                    a = 1
+                }
+            }, 120);
+            $("#b6").click(function () {
+                alert("없음");
+            });
+            $("#b7").click(function () {
+                // <marquee behavior="alternate">ㅋㅋ</marquee>
+                var m = $("<marquee></marquee>").attr("behavior", "alternate").text("ㅋㅋ");
+                // $("div").append(m);
+                $("div").prepend(m);
+            });
+            $("#b8").click(function () {
+               // $("div").remove();
+               $("div").empty();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <a href="https://www.naver.com">네이버로</a>
+    <hr>
+    <button id="b1">텍스트 추가/수정/삭제</button>
+    <button id="b2">텍스트 확인</button>
+    <hr>
+    <button id="b3">속성 추가/수정/삭제</button>
+    <button id="b4">속성 확인</button>
+    <button id="b5">속성 삭제</button>
+    <hr>
+    <img>
+    <hr>
+    <button id="b6">태그명 추가/수정/삭제/확인</button>
+    <hr>
+    <div>
+
+    </div>
+    <button id="b7">DOM객체 생성</button>
+    <button id="b8">DOM객체 삭제</button>
+</body>
+
+</html>

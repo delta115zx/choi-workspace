@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <script src="jQuery.js"></script>
+    <script>
+        // choiValidChecker.js : 유효성 검사 라이브러리
+        // jQuery.js : JS전반적 라이브러리
+        // react.js : JS전반적 + OOP 라이브러리
+
+        // 문법
+        //      jQuery(선택자).이벤트(콜백함수);
+        //      jQuery는 $로 줄여쓰기 가능
+        //      선택자
+        //          변수명(기존JS객체)
+        //          "CSS선택자"
+        //      이벤트
+        //          vanillaJS에서 onXXX했던거에서 on만 떼고
+        //          몇몇 예외는 있음
+        //      콜백함수
+        //          (vanillaJS도) 함수명 필요없으면 안써도 됨
+        // $(document).ready(function () {
+        //     alert("ㅋ");
+        // }); // body의 load이벤트랑 같음 -> main역할
+        $(function () {
+            var z = $("#zvxc");
+            $("button").click(function () {
+                alert(z.val());
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <input id="zvxc"><br>
+    <button>버튼</button>
+    <button>버튼2</button>
+</body>
+
+</html>

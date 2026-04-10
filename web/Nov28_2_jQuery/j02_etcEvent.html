@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1128</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            $("select").change(function () {
+                if ($(this).val() == "직접 입력") {
+                    var email3Input = $("<input>").attr("id", "email3");
+                    $("div").append(email3Input);
+                } else {
+                    $("div").empty();
+                }
+            });
+            $("button").click(function () {
+                if ($("#email2").val() == "직접 입력") {
+                    alert($("#email1").val() + "@" + $("#email3").val());
+                } else {
+                    alert($("#email1").val() + "@" + $("#email2").val())
+                }
+            });
+
+            // document : 이 html
+            // window : 이 브라우저(front-end : 보여지는 쪽)
+            // navigator : 이 브라우저(back-end : 기능 쪽)
+            alert(navigator.userAgent); // 접속 브라우저 정보가 문자열로
+
+            $(window).resize(function () {
+                var w = $(window).width();
+                var h = $(window).height();
+                $("h1").text(w + "," + h);
+            });
+
+            $(window).scroll(function () {
+                var red = $(document).height();
+                var green = $(window).height();
+                var blue = $(window).scrollTop();
+                var orange = blue + green;
+                if (orange >= red - 10) {
+                    var h2 = $("<h2></h2>").text("ㅋ");
+                    $("body").append(h2);
+                }
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+    이메일 :
+    <input id="email1"> @
+    <select id="email2">
+        <option>naver.com</option>
+        <option>gmail.com</option>
+        <option>직접 입력</option>
+    </select>
+    <div></div>
+    <button>가입</button>
+    <hr>
+    <h1></h1>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+    ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>ㅋㅋㅋ<br>
+</body>
+
+</html>

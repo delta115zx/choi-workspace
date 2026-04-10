@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1128</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // back-end개발자 : Python(FastAPI)으로 DB연동
+            // front-end개발자 : AJAX
+
+            // JavaScript + DB : 직접 연결은 없음
+            // XML/JSON을 통해서 간접적으로 가능
+
+            // AJAX(Asynchronous Javascript And Xml) : JavaScript써서 비동기식 통신해서 XML파싱
+            // 브라우저의 동일 출처 정책
+            //      내 서버의 xml은 받아올수있는데, 외부 데이터 받아오는데, 브라우저가 거부
+
+            // $.ajax({
+            //     url : "주소",
+            //     success : function(내용){}
+            // });
+            $.ajax({
+                url: "https://www.kma.go.kr/repositary/xml/fct/mon/img/fct_mon1rss_108_20251030.xml",
+                success: function (asd) {
+                    alert(asd);
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

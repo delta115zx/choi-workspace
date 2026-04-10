@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1201</title>
+    <style>
+        table {
+            position: absolute;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // https://api.openweathermap.org/data/2.5/weather?lat=37.5869776&lon=127.0037854&appid=baff8f3c6cbc28a4024e336599de28c4&units=metric&lang=kr
+            navigator.geolocation.getCurrentPosition(function (l) {
+                // JSON때만 쓸수있는 약식 AJAX
+                // $.getJSON(주소풀버전, function(받아온거){});
+                var url = "https://api.openweathermap.org/data/2.5/weather?lat="
+                    + l.coords.latitude + "&lon=" + l.coords.longitude + "&appid=baff8f3c6cbc28a4024e336599de28c4&units=metric&lang=kr"
+
+                $.getJSON(url, function (asd) {
+                    $("#descTd").text(asd.weather[0].description)
+                    $("#tempTd").text(asd.main.temp + "°C")
+                    var imgUrl = "https://openweathermap.org/img/wn/" + asd.weather[0].icon + "@2x.png"
+                    $("img").attr("src", imgUrl);
+                });
+
+                $("html").mousemove(function (e) {
+                    $("table").css("top", (e.pageY + 3) + "px").css("left", (e.pageX + 3) + "px");
+                });
+
+                // $.ajax({
+                //     url: "https://api.openweathermap.org/data/2.5/weather",
+                //     data: {
+                //         "lat": l.coords.latitude, 
+                //         "lon": l.coords.longitude, 
+                //         "appid": "baff8f3c6cbc28a4024e336599de28c4",
+                //         "units": "metric", "lang": "kr"
+                //     },
+                //     success: function (asdf) {
+                //         alert(asdf);
+                //     }
+                // });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td align="center" rowspan="2">
+                <img>
+            </td>
+            <td id="descTd"></td>
+        </tr>
+        <tr>
+            <td id="tempTd"></td>
+        </tr>
+    </table>
+</body>
+
+</html>

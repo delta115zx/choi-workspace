@@ -1,0 +1,15 @@
+#productArea .txtType {
+   border: red solid 2px;
+}
+#productBBSTbl {
+   background-color: brown;
+   color: white;
+   width: 150px;
+}
+#productBBSTbl .dataTr {
+   background-color: white;
+   color: black;
+}
+#productBBSTbl .dataTr:hover {
+   background-color: burlywood;
+}

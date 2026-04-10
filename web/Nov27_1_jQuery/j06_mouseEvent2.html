@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1127</title>
+    <style>
+        table {
+            position: absolute;
+            opacity: 0;
+            top: -100px;
+            left: -100px;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script>
+        // 원래 기능 없는 이벤트
+        // 원래 기능이 있는 이벤트
+        //      return true; - 기존 기능 살려
+        //      return false;- 기존기능 없애
+        $(function () {
+            // 우클릭해서 팝업메뉴 나올때
+            $(document).contextmenu(function () {
+                return false;
+            });
+
+            // 우클릭한 위치에 내 메뉴 나오게
+            $("html").mouseup(function (e) {
+                if (e.button == 2) {
+                    $("table").css("top", (e.pageY + 5) + "px")
+                    $("table").css("left", (e.pageX + 5) + "px")
+                    $("table").css("opacity", "1");
+                };
+                setTimeout(function () {
+                    $("table").css("opacity", "0"); 
+                    setTimeout(function () {
+                        $("table").css("top", "-100px").css("left", "-100px")    
+                    }, 500);
+                }, 2000);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <td><a href="https://www.naver.com">네이버로</a></td>
+        </tr>
+        <tr>
+            <td><a href="https://www.google.com">구글로</a></td>
+        </tr>
+        <tr>
+            <td><a href="https://www.daum.net">다음으로</a></td>
+        </tr>
+    </table>
+</body>
+
+</html>

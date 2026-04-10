@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1202</title>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script src="js/dec03_jQuery_old.js"></script>
+</head>
+
+<body>
+    <div data-role="page" id="titlepage">
+        <div data-role="header" data-position="fixed">
+            <h1>쇼핑몰</h1>
+        </div>
+        <div data-role="content">
+            <a href="#menupage" data-transition="flow">
+                <img src="img/jjan.jpg" id="titleImg">
+            </a>
+        </div>
+    </div>
+
+    <div data-role="page" id="menupage">
+        <div data-role="header" data-position="fixed">
+            <a href="#titlepage" data-icon="arrow-l"
+            data-transition="turn">뒤로</a>
+            <h1>쇼핑몰</h1>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li><a id="goSellerPageA" href="#sellerpage" data-transition="flow">판매자</a></li>
+                <li><a id="goProdcutPageA" href="#productpage" data-transition="flow">상품</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="sellerpage">
+        <div data-role="header" data-position="fixed">
+            <a href="#menupage" data-icon="arrow-l"
+            data-transition="turn">뒤로</a>
+            <h1>쇼핑몰</h1>
+        </div>
+        <div data-role="content">
+            <input placeholder="이름" id="sellerNameInput">
+            <input placeholder="생일" id="sellerBDInput">
+            <input placeholder="집" id="sellerAddrInput">
+            <button id="sellerRegBtn">등록</button>
+            <hr>
+            <ul id="sellerBBS" data-role="listview" data-inset="true">
+                
+            </ul>
+            <table id="sellerPageControlTbl">
+                <tr>
+                    <td align="center"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div data-role="page" id="productpage">
+        <div data-role="header" data-position="fixed">
+            <a href="#menupage" data-icon="arrow-l"
+            data-transition="turn">뒤로</a>
+            <h1>쇼핑몰</h1>
+        </div>
+        <div data-role="content">
+            <input placeholder="이름" id="productNameInput">
+            <input placeholder="가격" id="productPriceInput">
+            <input placeholder="재고" id="productStockInput">
+            <input placeholder="판매자번호" id="p_s_noInput">
+            <button id="productRegBtn">등록</button>
+            <hr>
+            <ul id="productBBS" data-role="listview" data-inset="true">
+                
+            </ul>
+            <table id="productPageControlTbl">
+                <tr>
+                    <td align="center"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

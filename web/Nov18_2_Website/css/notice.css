@@ -1,0 +1,25 @@
+#noticeBBS{
+    width: 600px;
+
+    /* 제목줄 */
+    background-color: black;
+    color:  white;
+
+    /* td간의 간격 */
+    border-spacing: 0px;
+}
+
+#noticeBBS .dataTr{
+    /* 내용줄 */
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+#noticeBBS .dataTr:hover{
+    background-color: #EF5350;
+}
+
+#noticeBBS td{
+    border-bottom: black solid 1px;
+}

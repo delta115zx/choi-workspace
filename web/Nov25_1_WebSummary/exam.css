@@ -1,0 +1,25 @@
+table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    background-color: green;
+}
+
+th {
+    font-size: 25px;
+    height: 50px;
+    color: white;
+}
+
+.iname {
+    text-align: center;
+    color: white;
+}
+
+.input {
+    background-color: greenyellow;
+}
+
+.dd {
+    background-color: greenyellow;
+}

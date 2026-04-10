@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            var csss = [
+                { c: "red", bgc: "black" },
+                { c: "green", bgc: "gray" },
+                { c: "blue", bgc: "yellow" }
+            ];
+            $("#b1").click(function () {
+                $("h1").each(function (i, h) {
+                    $(h).css("background-color", csss[i].bgc);
+                    $(h).css("color", csss[i].c);
+                });
+            });
+            $("#b2").click(function () {
+                $("h1").each(function(i, h) {
+                    setTimeout(function(){
+                    $(h).css("background-color", csss[i].bgc);
+                    $(h).css("color", csss[i].c);
+                    }, i*1000);
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 id="t1">ㅋㅋㅋ</h1>
+    <h1 id="t2">ㅎㅎㅎ</h1>
+    <h1 id="t3">ㅠㅠㅠ</h1>
+    <button id="b1">ㄱㄱ</button>
+    <button id="b2">ㄱㄱ</button>
+    <!-- b1 : 동시에
+         b2 : 1초간격 
+    -->
+</body>
+
+</html>

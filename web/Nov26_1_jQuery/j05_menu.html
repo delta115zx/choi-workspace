@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            $("#button").click(function () {
+                var t = $("table").css("top");
+                if (t == "-90px") {
+                    $("table").css("top", "0px");
+                } else {
+                    $("table").css("top", "-90px");
+                }
+                
+            });
+            
+        });
+        </script>
+        <style>
+            table {
+                position: fixed;
+                top: -90px;
+                transition: all 0.3 ease-out;
+            }
+        </style>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <td><a href="https://www.naver.com">네이버로</a></td>
+        </tr>
+        <tr>
+            <td><a href="https://www.google.com">구글로</a></td>
+        </tr>
+        <tr>
+            <td><a href="https://www.daum.net">다음으로</a></td>
+        </tr>
+        <tr>
+            <td id="button">ㅋ</td>
+        </tr>
+    </table>
+</body>
+
+</html>

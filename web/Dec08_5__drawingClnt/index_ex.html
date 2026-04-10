@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1208</title>
+    <style>
+        canvas {
+            border: black solid 2px;
+        }
+    </style>
+    <script src="jQuery.js"></script>
+    <script src="http://195.168.9.200:9999/socket.io/socket.io.js"></script>
+    <script>
+        // $(선택자).offset.left
+        // $(선택자).offset.top
+        $(function () {
+            var socket = io.connect("http://195.168.9.249:9999")
+            // var socket = io.connect("http://195.168.9.200:9999")
+
+            var paper = document.getElementById("cv");
+            var pen = paper.getContext("2d");
+            var xx = $("#cv").offset().left + 2;
+            var yy = $("#cv").offset().top + 2;
+            var drawMode = false;
+            var startX;
+            var startY;
+            var endX;
+            var endY;
+
+            $("#cv").mousedown(function (e) {
+                drawMode = true;
+                startX = e.pageX - xx;
+                startY = e.pageY - yy;
+            });
+
+            $("#cv").mousemove(function (e) {
+                if (drawMode) {
+                    endX = e.pageX - xx;
+                    endY = e.pageY - yy;
+                    var data = { "sx": startX, "sy": startY, "ex": endX, "ey": endY }
+                    socket.emit("xy", data);
+                    // pen.beginPath();
+                    // pen.moveTo(startX, startY);
+                    // pen.lineTo(endX, endY);
+                    // pen.closePath();
+                    // pen.stroke();
+                    startX = endX;
+                    startY = endY;
+                }
+            });
+
+
+            $("#cv").mouseup(function (e) {
+                drawMode = false;
+            });
+
+            socket.on("xy2", function (xyxy) {
+                pen.beginPath();
+                pen.moveTo(xyxy.sx, xyxy.sy);
+                pen.lineTo(xyxy.ex, xyxy.ey);
+                pen.closePath();
+                pen.stroke();
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <canvas id="cv" width="300px" height="400px"></canvas>
+</body>
+
+</html>

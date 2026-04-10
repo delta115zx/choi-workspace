@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1202</title>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script src="http://195.168.9.200:9999/socket.io/socket.io.js"></script>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        .td40 {
+            width: 40%;
+        }
+
+        .td20 {
+            width: 20%;
+        }
+
+        .myMsg{
+            background-color: blue;
+            color: white;
+            padding: 5px;
+        }
+        
+        .yourMsg{
+            background-color: white;
+            color: blue;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        $(function () {
+            var socket = io.connect("http://195.168.9.249:9999")
+            // var socket = io.connect("http://195.168.9.200:9999")
+
+            $("#msgInput").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    var name = $("#nameInput").val();
+                    var msg = $("#msgInput").val();
+                    var msg2 = { "n": name, "m": msg };
+                    socket.emit("userMsg", msg2);
+                    $("#msgInput").val("");
+                }
+            });
+
+            socket.on("srvMsg", function (msg) {
+                var br = $("<br>");
+                var td1 = $("<td></td>").attr("class", "td40");
+                var td2 = $("<td></td>").attr("class", "td20");
+                var td3 = $("<td></td>").attr("class", "td40");
+                if (msg.n == $("#nameInput").val()) {
+                    $(td3).append(msg.n, br, msg.m)
+                    $(td3).attr("class", "myMsg")
+                }
+                else {
+                    $(td1).append(msg.n, br, msg.m)
+                    $(td1).attr("class", "yourMsg")
+                }
+                var tr = $("<tr></tr>").append(td1, td2, td3);
+                $("table").append(tr);
+                $(window).scrollTop($(document).height());
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div data-role="page" id="titlePage">
+        <div data-role="header" data-position="fixed">
+            <h1>채팅</h1>
+        </div>
+        <div data-role="content">
+            <input id="nameInput" placeholder="대화명">
+            <a href="#chatPage" data-role="button" data-transition="flow">입장</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="chatPage">
+        <div data-role="header" data-position="fixed">
+            <a href="#titlePage" data-icon="arrow-l">퇴장</a>
+            <h1>채팅</h1>
+        </div>
+        <div data-role="content">
+            <table>
+
+            </table>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <input id="msgInput">
+        </div>
+    </div>
+</body>
+
+</html>

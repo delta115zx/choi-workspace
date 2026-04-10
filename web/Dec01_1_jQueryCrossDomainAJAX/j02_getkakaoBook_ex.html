@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1201</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+    <script src="jQuery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+    <script>
+        $(function () {
+            // https://dapi.kakao.com/v3/search/book
+            //    $.ajax({
+            //         url: "https://dapi.kakao.com/v3/search/book",
+            //         data: {
+            //             "Authorization": "51d1ecd7656d567e9e263d69ff1ebbd4",
+
+            //         }
+            //    })
+            var s = $('.bxslider').bxSlider({
+                mode: 'fade',
+                captions: true,
+                slideWidth: 600
+            });
+
+            $("button").click(function () {
+                var searchTxt = $("input").val()
+                $.ajax({
+                    url: "https://dapi.kakao.com/v3/search/book",
+                    data: { "query": searchTxt },
+                    beforeSend: function (reqqq) {
+                        reqqq.setRequestHeader("Authorization", "KakaoAK 51d1ecd7656d567e9e263d69ff1ebbd4")
+                    },
+                    success: function (bookData) {
+                        $("table").empty()
+                        $(".bxslider").empty()
+                        $.each(bookData.documents, function (i, b) {
+                            var td1 = $("<td></td>").text(b.title + "(" + b.price + "원)");
+                            var img = $("<img>").attr("src", b.thumbnail);
+                            var td2 = $("<td></td>").append(img)
+                            var tr = $("<tr></tr>").append(td2, td1);
+                            $("table").append(tr);
+
+                            var img2 = $("<img>").attr("src", b.thumbnail).attr("title", b.title + "(" + b.price + "원)");
+                            var div = $("<div></div>").append(img2);
+                            $(".bxslider").append(div);
+                        })
+                        s.reloadSlider();
+                    }
+                });
+            });
+
+            $("input").keyup(function (e) {
+                // if (e.keyCode == 13) {
+                // 강제 이벤트 발생
+                //      $(선택자).trigger(이벤트명);
+                $("button").trigger("click");
+                // }
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div class="bxslider">
+
+    </div>
+    <input> <button>검색</button>
+    <hr>
+    <table border="1">
+    </table>
+    <hr>
+</body>
+
+</html>

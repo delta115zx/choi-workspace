@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1124</title>
+    <script>
+        // 기존 기능이 있을때
+        //      return true; - 기존 기능 살려라
+        //      return false;- 기존 기능 없애라
+        function chekkk() {
+            // document.form이름.input이름
+            // var nameInput = document.ff.name;
+            // var prcieInput = document.ff.price;
+            var pwInput = document.ff.pw;
+
+            // 필수검사
+            // if (!nameInput.value) {
+            //     alert("품명 필수");
+            //     nameInput.focus();
+            //     return false;
+            // }
+
+            // if (!prcieInput.value) {
+            //     alert("가격 필수");
+            //     prcieInput.focus();
+            //     return false;
+            // }
+
+            if (!pwInput.value) {
+                return false;
+            }
+
+            // 조합(정규식?)
+            // 숫자중에 하나이상, qwerty중에 하나이상
+            var numSet = "1234567890"; // 들어가야하는 문자열세트
+            var numOk = false; // 그 문자열세트중에 들어있는지 여부
+
+            var qweSet = "qwerty";
+            var qweOk = false;
+
+
+            for (var i = 0; i < numSet.length; i++) {
+                if (pwInput.value.indexOf(numSet[i]) != -1) {
+                    numOk = true;
+                    break;
+                }
+            }
+
+            if (!numOk) {
+                alert("숫자포함");
+                return false;
+            }
+
+            for (var i = 0; i < qweSet.length; i++) {
+                if (pwInput.value.indexOf(qweSet[i]) != -1) {
+                    qweOk = true;
+                    break;
+                }
+            }
+
+            if (!qweOk) {
+                alert("비번조합");
+                return false
+            }
+
+            // 숫자만
+            // if (isNaN(prcieInput.value)) {
+            //     alert("가격 필수")
+            //     prcieInput.value = "";
+            //     prcieInput.focus();
+            //     return false;
+            // }
+
+            // 최소글자수
+            // if (nameInput.value.length < 3) {
+            //     alert("3글자 이상");
+            //     nameInput.value = "";
+            //     nameInput.focus();
+            //     return false;
+            // }
+
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <form action="http://195.168.9.200:7777/product.reg" onsubmit="return chekkk();" name="ff">
+        품명 : <input name="name" autofocus maxlength="10">
+        <p>
+            가격 : <input name="price">
+        <p>
+            PW : <input name="pw">
+        <p>
+            <button>등록</button>
+    </form>
+</body>
+
+</html>

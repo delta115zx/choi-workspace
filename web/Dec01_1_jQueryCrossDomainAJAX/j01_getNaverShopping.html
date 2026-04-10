@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1201</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // AJAX : 외부데이터 못가져옴
+            // Cross-Domain AJAX : 외부데이터 활용하는 AJAX
+            //      서버측에서 Access-Control-Allow-Origin헤더 세팅해놓으면
+            //      proxy서버 구현
+
+            // $.ajax({
+            //     url : "주소",
+            //     data : {"변수명": 값, "변수명": 값, ...},
+            //     beforeSend : function(요청객체){
+            //          요청객체.setRequestHeader("이름", "값");
+            //          요청객체.setRequestHeader("이름", "값");
+            //          ...
+            //     },
+            //     success : function(내용){}
+            // });
+            $("button").click(function () {
+                $.ajax({
+                    url: "http://195.168.9.200:7777/naver.shopping.get",
+                    data: { "q": $("input").val() },
+                    success: function (xmlll) {
+                        $("table").empty();
+                        $(xmlll).find("item").each(function (i, item) {
+                            var title = $(item).find("title").text();
+                            var image = $(item).find("image").text();
+                            var mallName = $(item).find("mallName").text();
+                            var lprice = $(item).find("lprice").text();
+
+                            var img = $("<img>").attr("src", image);
+
+                            var ttd = $("<td></td>").html(title + "(" + mallName + ")");
+                            var itd = $("<td></td>").html(img);
+                            var lptd = $("<td></td>").text(lprice + "원");
+
+                            var tr = $("<tr></tr>").append(ttd, itd, lptd);
+                            $("table").append(tr);
+                        });
+                    }
+                    // url: "https://openapi.naver.com/v1/search/shop.xml",
+                    // data: { "query": $("input").val() },
+                    // beforeSend: function (reqqq) {
+                    //     reqqq.setRequestHeader("X-Naver-Client-Id", "55xZIfWfDlxCn4HhFSYx");
+                    //     reqqq.setRequestHeader("X-Naver-Client-Secret", "qFJXlykcLJ");
+                    // },
+                    // success: function (xmlll) {
+                    //     alert(xmlll);
+                    // }
+                });
+            });
+            $("input").keyup(function (e) {
+                // if (e.keyCode == 13){
+                    // 강제 이벤트 발생
+                    //      $(선택자).trigger(이벤트명);
+                    $("button").trigger("click");
+                // }
+            })
+        });
+    </script>
+    <style>
+        img {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <input> <button>검색</button>
+    <hr>
+    <table border="1">
+    </table>
+</body>
+
+</html>

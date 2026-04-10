@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1128</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // AJAX : 외부데이터 활용 불가
+            // Cross-Domain AJAX : 외부데이터를 활용하는 AJAX
+            // $.ajax({
+            //     url: "http://openapi.seoul.go.kr:8088/575a4655496b636839386f58586542/xml/RealtimeCityAir/1/25/",
+            //     success: function(asd){
+            //         alert(asd);
+            //     }
+            // });
+            $.ajax({
+                url: "http://195.168.9.200:7777/xmll.testt",
+                success : function(zxcv){
+                    $(zxcv).find("snack").each(function (i, s) {
+                        var n = $(s).find("s_name").text();
+                        var p = $(s).find("s_price").text();
+                        var nTd = $("<td></td>").text(n);
+                        var pTd = $("<td></td>").text(p);
+                        var tr = $("<tr></tr>").append(nTd, pTd);
+                        $("table").append(tr);
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>품명</th>
+            <th>가격</th>
+        </tr>
+    </table>
+</body>
+
+</html>

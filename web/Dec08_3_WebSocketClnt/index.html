@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1202</title>
+    <script src="jQuery.js"></script>
+    <script src="http://195.168.9.200:7777/socket.io/socket.io.js"></script>
+    <script>
+        $(function () {
+            // 연결하면 서버쪽으로 메세지를 자동 전송
+            //  제목 : connection
+            //  내용 : 나랑 연결되는 소켓객체
+            var socket = io.connect("http://195.168.9.200:7777");
+
+            $("button").click(function(){
+                var msg = $("input").val();
+                
+                socket.emit("abcd", msg);
+
+                $("input").val("");
+            });
+
+            socket.on("efgh", function(zxc){
+                alert(zxc);
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <input><button>전송</button>
+</body>
+
+</html>

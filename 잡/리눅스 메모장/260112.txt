@@ -1,0 +1,161 @@
+clear
+
+Tab키로 자동완성
+
+화살표 위/아래
+
+history
+!번호
+
+경로체계
+   최상위
+   W] C:
+   L] /
+   구분자
+   W] \
+   L] /
+   대소문자
+   W] 구별안함
+   L] 다름
+
+홈 directory(폴더)
+W] C:\사용자\계정
+L] /home/계정 -> ~
+
+현재 내 위치 확인
+W]
+L] pwd
+
+뭐있는지 확인
+W]
+L] ls
+   ls -a
+   ls -l
+   ls -al -> ll
+
+이동 
+W]
+L] cd 경로
+cd Downloads
+cd ..
+cd /
+cd ~
+
+디렉토리 만들기
+W]
+L] mkdir 이름
+	mkdir Jan12
+
+메모장열어서 작업하고 저장
+W] 메모장열어서 작업하고 저장
+L] vi 파일명 
+
+vi(visual editor) : 윈도우의 메모장같은
+a키 한번 누르고나면
+
+Esc
+:q!
+
+우분투리눅스 기본
+vi-tiny -> vi
+sudo apt remove vim-tiny
+sudo apt install vim
+
+vi abc.txt
+설정모드 -a-> 입력모드
+
+입력모드 -Esc> 설정모드
+/검색어 : 찾기
+dd : 줄 삭제
+yy : 줄 복사
+p : 붙여넣기
+:q! : 종료하고 나오기
+:wq! : 저장&종료하고 나오기
+
+복사
+cp 뭐를 어디에
+cp abc.txt test
+
+삭제
+rm -rf 뭐를
+rm -rf abc.txt
+
+이동
+mv 뭐를 어디에
+mv abc.txt test
+
+이름바꾸기
+mv abc.txt ./def.txt
+
+아카이빙(archive)
+  파일 여러개를 하나로 묶어
+압축(zipping)
+  파일 하나 용량 줄이기
+
+아카이빙+압축하기
+tar 옵션 뭐를
+    c : 하기
+    x : 풀기
+
+    v : 과정보여줘
+
+    z : gz로 압축
+    j : bz2로 압축
+
+    f 파일명 : 파일명 지정
+
+Jan12폴더를 jan12.tar.gz로 압축
+tar cvzf jan12.tar.gz Jan12/
+tar xvzf jan12.tar.gz
+-----------------------
+zip압축
+
+zip -r 파일명 대상
+zip -r jan12.zip Jan12/
+
+unzip 파일명
+unzip jan12.zip
+----------------------
+Linux를 FTP서버
+sudo apt install vsftpd
+
+기본 : Linux -> Win다운로드만 가능한 상태
+
+Win -> Linux 업로드 가능하게 설정파일 수정
+sudo vi /etc/vsftpd.conf
+#write_enable=YES 주석 해제
+저장, 종료
+
+vsftpd재시작
+sudo /etc/init.d/vsftpd restart
+
+Linux : ftp서버
+Win : ftp클라이언트
+-------------------
+리눅스 서버
+쌩 Python
+DB - x
+Tomcat
+Node.js
+React
+...
+--------------------
+Azure 에서 빌려다가
+
+
+PuTTY : 마음대로 꺼도 무관
+서버 : 
+	현재 시스템 상태 저장하기 : 안끄기
+	컴퓨터 끄기 신호 보내기 : 정상종료
+	시스템 전원 끄기 : 본체 파워버튼
+
+
+
+
+
+
+
+
+
+
+

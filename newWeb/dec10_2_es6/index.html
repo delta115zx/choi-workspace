@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>1210</title>
+      <script>
+         // ES6 : 신버전 JavaScript
+         // 고급언어가 작업은 쉬울수도 있겠는데, 혼란 -> 저급방향으로 발전
+         /////////////////////////////////////
+         //  var a = 10; // a라는 변수만들고, 10넣어
+         //  function test() {
+         //     alert(a);   // 10번줄의 a 접근가능하니 10 출력
+         //     // a = 20;  // 기존에 있던 a를 20으로 바꿔라
+         //     var a = 20; // a라는 변수만들고, 20넣어
+         //                 // 이미 a가 있는데 -> 안돼야 정상
+         //                 // JS는 고급언어 -> 허용 -> test()내의 a 는 14번줄의 a
+         //                 // -> 혼란
+         //     alert(a);   // 20으로 바꿨으니 20 출력
+         //  }
+         //  test();
+         /////////////////////////////////////
+         // 변수 만들때
+         //      var -> let : 변수
+         //      var -> const : 상수
+         let a = 10;
+         function test() {
+            alert(a);
+            // a = 20;
+            // let a = 20; // 같은 이름으로 변수 만들기 불가
+            // alert(a);
+            const b = 100;
+            // b = 200; // 값 변경 불가
+            alert(b);
+         }
+         test();
+         /////////////////////////////////////
+         let b = 10;
+         let c = "10";
+         alert(b == c); // 고급언어 -> 자료형은 알아서 대충 센스있게 처리
+         alert(b === c); // 자료형까지 따지는
+         alert(b !== c);
+         /////////////////////////////////////
+         // JS특유의 콜백함수 시스템 -> 함수명 안써도 됨
+         // -> 화살표함수활용
+
+         // navigator.geolocation.getCurrentPosition(function (loc){
+         //     alert(loc.coords.latitude);
+         //     alert(loc.coords.longitude);
+         // })
+         // 화살표함수(arrow function) : anfn
+         //      (변수명1, 변수명2, ...) => {}
+         navigator.geolocation.getCurrentPosition((loc) => {
+            alert(loc.coords.latitude);
+            alert(loc.coords.longitude);
+         });
+         /////////////////////////////////////
+         //  일반함수도 화살표함수로 표현하고, 변수에 저장해서 사용 : nfn
+         //  function hab(e, f){
+         //     alert(e + f);
+         //  }
+         const printHab = (e, f) => {
+            alert(e + f);
+         };
+         //  그 함수써서 1, 3 합 출력
+         printHab(1, 3);
+         //////////////////////
+         // 화살표함수(arrow function) : anfn
+         //      (변수명1, 변수명2, ...) => {내용}
+         //      (변수명1, 변수명2, ...) => 내용    : 내용부분이 리턴
+         const getHab = (g, h) => g + h;
+         let i = getHab(11, 22);
+         alert(i);
+      </script>
+   </head>
+
+   <body></body>
+</html>

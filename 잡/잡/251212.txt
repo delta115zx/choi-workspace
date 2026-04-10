@@ -1,0 +1,32 @@
+On-premise : DB서버
+	직접 구축하는서버 -> 10층 프로젝트룸에
+	9층만 외부접속x
+
+IaaS(Infra as a Service) : FastAPI/Node.js/Tomcat 
+	MS Azure VM(쌩 리눅스 컴 임대)서버만 제공
+	직접 설치해서 사용
+
+PaaS(Platform aaS): MS Azure Machine Learning
+	서버 + 개발환경 제공
+
+SaaS(Service aaS) : MS Azure AI
+	서버 + 완성된 프로그램 제공(완성된 AI)
+
+
+MS Azure Open AI :
+	MS Azure AI 안에있는 Open AI 제품
+
+일반] 랭체인/ollama : 완성된 AI모델을 불러와서 학습시키고 개발환경
+우리반] MS Azure Machine Learning
+
+AI 알고리즘 만들기 - 석박사
+AI 서비스 만들기 - 
+	완성된 AI모델을 불러와 + 추가학습
+
+
+
+
+
+
+
+

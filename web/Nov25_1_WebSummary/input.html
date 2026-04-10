@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1125</title>
+    <link rel="stylesheet" href="exam.css">
+    <script src="exam.js"></script>
+    <script src="choiValidChecker.js"></script>
+</head>
+
+<body>
+    <form action="http://195.168.9.200:7777/bmicheck" method="post" enctype="multipart/form-data" 
+        name="joinForm" onsubmit="return vCheck();">
+        <table>
+            <tr>
+                <th colspan="2">비만도 검사</th>
+            </tr>
+            <tr>
+                <td class="iname">이름</td>
+                <td class="input"><input name="name"></td>
+            </tr>
+            <tr>
+                <td class="iname">키</td>
+                <td class="input"><input name="height" maxlength="3">cm</td>
+            </tr>
+            <tr>
+                <td class="iname">몸무게</td>
+                <td class="input"><input name="weight" maxlength="3">kg</td>
+            </tr>
+            <tr>
+                <td class="iname">사진</td>
+                <td class="input"><input type="file" name="photo"></td>
+            </tr>
+            <tr class="input">
+                <td colspan="2" align="center"><button>결과보기</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

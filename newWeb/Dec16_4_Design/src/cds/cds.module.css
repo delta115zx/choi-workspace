@@ -1,0 +1,8 @@
+.ccc {
+   color: blue;
+}
+
+/* 글로벌 : 전체적용 */
+:global .ddd {
+   color: orange;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1120</title>
+</head>
+
+<body>
+    <!-- 
+        form : 편함
+            form속에 잇는 button/input type="submit"/ input type="image" 누르면
+            form속에 있는 input
+                name을 reqParam변수명으로
+                내용을 reqParam값으로(전기신호로 바꿔서(인코딩))
+            action에 있는 쪽으로 요청해줌
+
+        파일 업로드
+            1) reqParam이 주소에 실려가는 GET방식으로는 파일 표현 불가
+                -> POST방식으로
+            2) 기존 인코딩 방식이 글자/숫자는 인코딩 가능, 파일은 인코딩 불가
+                -> 인코딩방식을 바꿔야
+    -->
+    <Form action="http://195.168.9.152:7777/file.upload" 
+            method="post" enctype="multipart/form-data">
+            제목 : <input name="title"><p>
+            사진 : <input name="photo" type="file"><p>
+            압축파일 : <input name="zipp" type="file"><p>
+            <button>ㄱㄱ</button>
+    </Form>
+</body>
+
+</html>

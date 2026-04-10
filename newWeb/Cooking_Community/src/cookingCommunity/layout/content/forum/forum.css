@@ -1,0 +1,262 @@
+#postPageL {
+   width: 120px;
+   height: 100%;
+   position: fixed;
+   top: 0px;
+   left: 0px;
+}
+#postPageR {
+   width: 120px;
+   height: 100%;
+   position: fixed;
+   top: 0px;
+   right: 0px;
+}
+#postPageL:hover,
+#postPageR:hover {
+   background-color: #ffffffaa;
+}
+#postBlankArea {
+   height: 125px;
+}
+
+#siteForumArea {
+   width: 80%;
+   margin-top: 30px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#siteForumArea th {
+   font-size: 20px;
+}
+
+#siteForumArea #authorTh {
+   width: 150px;
+}
+
+#siteForumSnWArea {
+   position: fixed;
+   width: 30%;
+   left: 34%;
+   bottom: 20px;
+}
+
+#siteForumSnWArea #searchInput {
+   width: 500px;
+   height: 30px;
+   font-size: 20px;
+   background-color: transparent;
+   border: none;
+}
+
+#siteForumSnWArea #colorInput {
+   width: 500px;
+   height: 30px;
+   font-size: 20px;
+   background-color: transparent;
+   border: none;
+}
+#siteForumSnWArea #writeInput {
+   resize: none;
+   width: 500px;
+   height: 150px;
+   font-size: 20px;
+   padding-left: 10px;
+   background-color: transparent;
+   border: none;
+}
+
+#siteForumSnWArea #searchImg {
+   margin-left: 5px;
+   width: 30px;
+   height: 30px;
+   vertical-align: middle;
+}
+
+#siteForumSnWArea #searchImg:hover {
+   cursor: pointer;
+}
+
+#siteForumSnWArea #writeImg {
+   width: 30px;
+   margin-left: 5px;
+}
+
+#siteForumSnWArea #writeImg:hover {
+   cursor: pointer;
+}
+
+.siteForumTextTd {
+   padding-left: 10px;
+}
+
+.forumImgTd {
+   width: 150px;
+}
+
+.forumImgTd img {
+   max-width: 140px;
+}
+
+.aForumPost .titleTdTbl img {
+   max-width: 30px;
+}
+
+.aForumPost {
+   width: 900px;
+   margin-left: auto;
+   margin-right: auto;
+   transition: all 0.5s ease-in;
+}
+
+.aForumPost .titleTdTbl {
+   width: 100%;
+}
+
+.aForumPost .titleTdTbl img {
+   cursor: pointer;
+}
+
+.aForumPost .contentTd {
+   background-color: #ffffffdd;
+}
+
+.contentTdTbl {
+   min-height: 150px;
+}
+
+.contentTdTbl .imgTd {
+   width: 130px;
+   background-color: #bdbdbd;
+   border-right: #42424299 solid 3px;
+}
+
+.contentTdTbl .imgTd img {
+   max-width: 120px;
+}
+
+.contentTdTbl .dateTd {
+   padding-left: 10px;
+   font-size: 10pt;
+}
+
+.contentTdTbl .txtTd {
+   padding-left: 10px;
+   font-size: 20pt;
+   white-space: pre-wrap;
+   transition: all 0.5s ease-out;
+}
+.contentTdTbl .txtTd img {
+   width: 30px;
+   margin-left: 10px;
+}
+.contentTdTbl .txtTd img:hover {
+   cursor: pointer;
+}
+
+.aForumPost .editTxt {
+   white-space: pre-wrap;
+   resize: none;
+   width: 600px;
+   height: 80px;
+   font-family: none;
+   font-weight: 400;
+   font-size: 20px;
+}
+
+.contentTdTbl .replyTd {
+   padding-left: 15pt;
+}
+
+#ForumPostUpdateArea {
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   background-color: #999999aa;
+}
+#ForumPostUpdateArea textarea {
+   font-family: none;
+   font-weight: 500;
+   font-size: 25px;
+   width: 500px;
+   height: 200px;
+   resize: none;
+   border: none;
+   background-color: transparent;
+}
+#ForumPostUpdateArea .closeImg img {
+   max-width: 30px;
+}
+
+#ForumPostUpdateArea img:hover {
+   cursor: pointer;
+}
+
+#forumPostUpdateForm {
+   border: white solid 3px;
+}
+
+#forumPostUpdateForm .writerArea {
+   background-color: white;
+}
+
+#forumPostUpdateForm .writer {
+   font-size: 20px;
+   font-weight: 900;
+}
+
+#ForumPostUpdateArea #imgTd {
+   background-color: white;
+   width: 100px;
+}
+
+#ForumPostUpdateArea #imgTd:hover {
+   cursor: pointer;
+}
+
+#ForumPostUpdateArea #imgTd img {
+   width: 50px;
+}
+
+.aForumPostReply td {
+   padding: 0px;
+}
+
+.aForumPostReply .writer {
+   font-size: 12pt;
+   padding: 1px;
+   font-weight: 900;
+}
+
+.aForumPostReply .txt {
+   padding-top: 4px;
+   padding-left: 10px;
+   font-size: 12pt;
+   font-family: "blackF";
+}
+
+.aForumPostReply .date {
+   padding-left: 10px;
+   font-size: 9pt;
+}
+
+.aForumPostReply button {
+   border: none;
+   background-color: transparent;
+   font-size: 15px;
+}
+
+.aForumPostReply button:hover {
+   color: red;
+}
+
+.aForumPostReply input {
+   background-color: transparent;
+   border: none;
+   border-bottom: black solid 2px;
+   width: 200px;
+   font-size: 12pt;
+}
+
+/* 줄바꿈처리 white space: pre-wrap */

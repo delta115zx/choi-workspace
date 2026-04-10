@@ -1,0 +1,149 @@
+리눅스 서버 - 가상머신
+-> 포맷하고 실제 on-premise : DB하고
+-> azure에서 임대해서 cloud하고 : FastAPI/ ...등등
+-> AI쪽 Azure MachineLearning/Auzre AI
+ 
+1. Ubuntu Linux 확보
+ 
+2. 기본 설치할 것들
+sudo apt install net-tools : IP주소 확인하게
+sudo apt install openssh-server : 원격제어하게 ssh서버로
+sudo apt remove vim-tiny : vi에디터 최소버전 삭제
+sudo apt install vim : vi에디터 정식버전으로 설치
+sudo apt install vsftpd : 파일전송가능하게 FTP서버로
+sudo vi /etc/vsftpd.conf : vsftpd 설정파일 열어서
+#write_enable=YES 주석제거 : 업로드 가능하게(a눌러야 됨)
+sudo /etc/init.d/vsftpd restart : vsftpd 재시작
+ 
+3. 테스트
+ifconfig : IP주소확인(192.168.56.xxx)
+win에서 putty로 접속
+win에서 filezilla로 파일질라로 업/다운로드 테스트
+putty에서
+mkdir Jan13
+cd Jan13
+ 
+4. Python
+vi pythonTets.py 간단한거 만들고
+python3 pythonTest.py
+ 
+5. DB
+가상머신 사양이 낮아서, 구동불가함
+Azure 사양이 낮고, 사양 높은 곳에 DB서버 설치 하면 요금 문제있음
+-> on-Premise 교재 참고해서 ㄱㄱ
+ 
+6. Apache Tomcat(HTML/CSS, jQuery)톰켓
+6-1. Java 설치
+Java가 apt시스템에 없어서 sudo apt install java 이런식으로 설치가 안됨
+sudo add-apt-repository ppa:openjdk-r/ppa -> Java가 있는 사설저장소 등록
+sudo apt update : 목록 업데이트
+sudo apt install openjdk-17-jdk : Java설치
+java -version : 확인
+ 
+6-2. Apache Tomcat WAS 다운받고, 압축풀기
+cd ~
+wget
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.113/bin/apache-tomcat-9.0.113.tar.gz
+tar xvzf apache-tomcat-9.0.113.tar.gz
+rm -rf apache-tomcat-9.0.113.tar.gz
+cd apache-tomcat-9.0.113
+ 
+6-3.  설정, 실행
+vi conf/server.xml  : 서버 설정 파일
+/20000 정도로 검색해서 port번호 수정
+bin/startup.sh : ON
+bin/shutdown.sh : OFF
+ 
+6-4. 접속
+win에서 http://서버주소:포트번호 로 접속
+ 
+6-5. 서비스
+win에서 vscode써서, HTML/CSS/jQuery 뭐 하나 작업해서
+filezilla써서 apache-tomcat-9.0.113/webapps/ROOT에 있는거 다 지우고 거기다 업로드
+ 
+7. Apache Tomcat(React)
+7-1. win에서 react프로젝트 만들고 뭐 간단한거 작업하고
+7-2. 빌드
+실행중인거 종료하고(Ctrl + c)
+yarn build
+ 
+7-3. 서비스
+생기는 dist폴더 속에 있는거를 
+filezilla써서 ~/apache-tomcat-9.0.113/webapps/ROOT에 있는거 다 지우고 거기다 업로드
+ 
+8. FastAPI
+수업때 하는 우분투 버전이 18.04라 FastApi+uvicorn 조합이 안됨
+8-1.  Python 3.9버전을 설치할 수 있게 환경설정
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev curl software-properties-common
+ 
+sudo apt update
+ 
+8-2. 설치파일 다운로드
+cd ~
+wget https://www.python.org/ftp/python/3.9.13/Python-3.9.13.tar.xz
+tar xvf Python-3.9.13.tar.xz
+rm -rf Python-3.9.13.tar.xz
+cd Python-3.9.13
+ 
+8-3. 설치
+./configure --enable-optimizations
+make -j 12
+sudo make altinstall
+ 
+8-4. Python3.9 설치확인
+python3.9 빠져나오고
+pip3.9 list
+ 
+8-5. FastAPI + Uvicorn 라이브러리 설치
+pip3.9 install fastapi
+pip3.9 install uvicorn[standard]
+ 
+8-6. 실행
+cd ~
+cd Jan13
+vi faTest.py
+python3.9 -m uvicorn faTest:app --reload --host=0.0.0.0 --port=9999
+ 
+ 
+8-8. 백그라운드 실행(PuTTY꺼도 실행되게)
+cd Jan13
+nohup python3.9 -m uvicorn faTest:app --reload --host=0.0.0.0 --port=9999 &
+ 
+ 
+8-8. 백그라운드 실행중인거 종료
+ps -ef : 실행중인 프로세스들
+ps -ef|grep python3.9 : 실행중인 프로세스들 중에 python3.9 찾기 -> 프로세스 번호 확인
+kill -9 번호
+ 
+9. Node.js
+9-1. Node.js구버전 설치 준비
+구버전 설치파일 있는 주소 등록
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+설치환경 세팅
+. ~/.nvm/nvm.sh
+9-2. 설치
+nvm install 9.0.0
+ 
+9-3. 사용하는 lib설치
+npm install nodemon -g : 
+1) 어차피 백그라운드실행할텐데
+2) 서버에서 소스를 왜수정?
+-> 굳이 설치할 필요x
+npm install express -g
+npm install express-generator@4 -g
+npm install forever -g : Node.js백그라운드 실행 시스템
+ 
+9-4. 프로젝트
+cd Jan13
+express NodeJSTest
+cd NodeJSTest
+npm install
+vi app.js
+ 
+9-5. 실행
+node app.js
+ 
+9-6. 백그라운드 실행
+forever start app.js
+ 
+nohup node app.js &

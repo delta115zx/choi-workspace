@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1126</title>
+    <script src="jQuery.js"></script>
+    <script>
+        // event=driven programming
+        //  이벤트에 콜백함수 연결해놓고, 그 이벤트 발생하면...
+        $(function () {
+            // 모든 h1들에 더블클릭 이벤트 발생하면 abcd함수 호출하도록 연결해두기
+            $("h1").dblclick(function abcd() {
+                for (var i = 0; i < 3; i++) {
+                    alert("ㅋ");
+                }
+
+                // 모든 h2들에 클릭 이벤트 발생하면 zz함수 호출하도록 연결해두기
+                $("h2").click(function zz() {
+                    alert("ㅎ");
+                });
+            });
+            var i = $("input");
+            $("h3").click(function () {
+                var ival = $(i).val();
+                alert(ival);
+            });
+            $("h4").click(function () {
+                // JS는 함수 overloading이 가능
+                // jQuery문법 특징
+                //      ~~~.val() : 가져오기
+                //      ~~~.val("ㅋ") : 값 세팅
+                $(i).val("ㅋㅋㅋ");
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>ㅋㅋㅋ</h1>
+    <h2>ㅎㅎㅎ</h2>
+    <input>
+    <h3>ㅇㅇ</h3>
+    <h4>ㅠㅠ</h4>
+</body>
+
+</html>

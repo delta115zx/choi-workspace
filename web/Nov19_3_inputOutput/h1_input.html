@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1119</title>
+    <link rel="stylesheet" href="h1.css">
+</head>
+
+<body>
+    <form action="http://195.168.9.152:7777/member.sign.up" method="post">
+        <table>
+            <tr>
+                <th colspan="2">회원가입</th>
+            </tr>
+            <tr>
+                <td class="td1">id</td>
+                <td><input name="id" class="txtType" placeholder="한글 쓰지마"></td>
+            </tr>
+            <tr>
+                <td class="td1">pw</td>
+                <td><input name="pw" type="password" class="txtType" placeholder="한글 쓰지마"></td>
+            </tr>
+            <tr>
+                <td class="td1">성별</td>
+                <td>
+                    <!-- name같은거중에 반드시 하나만 선택 -->
+                    <input name="gender" type="radio" value="남" checked>남자<br>
+                    <input name="gender" type="radio" value="여">여자<br>
+                    <input name="gender" type="radio" value="기">기타<br>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">주소</td>
+                <td>
+                    <select class="selectType" name="addr">
+                        <option value="서울ㅋㅋㅋㅋㅋㅋㅋ">서울</option>
+                        <option>경기</option>
+                        <option>기타</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">취미</td>
+                <td class="ho">
+                    <!-- 목록중에 여러개 선택 -->
+                    <input name="hobby" type="checkbox" value="독서">독서<br>
+                    <input name="hobby" type="checkbox" value="운동">운동<br>
+                    <input name="hobby" type="checkbox" value="잠">잠<br>
+                    <input name="hobby" type="checkbox" value="낚시">낚시<br>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">자기소개</td>
+                <td>
+                    <textarea name="comment" class="taType"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <!-- 
+                        원래 : form속의 input type="submit"를 누르면 요청출발
+                        바뀜 : form속의 button처럼 생긴거 누르면 요청출발
+                            (input type="reset"은 빼고)
+                    -->
+                    <input type="submit" value="가입" class="btnType"><br>
+                    <input type="reset" value="지우기" class="btnType"><br>
+                    <button class="btnType">가입</button><br>
+                    <input type="image" src="Apple64.png"><br>
+                    <!-- 
+                        HTML5에서 type이 대거 추가 -> IE에서 안나옴
+                    -->
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

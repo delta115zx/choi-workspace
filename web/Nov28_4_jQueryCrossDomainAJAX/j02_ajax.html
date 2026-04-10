@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>1128</title>
+    <script src="jQuery.js"></script>
+    <script src="jquery.canvasjs.min.js"></script>
+    <script>
+        $(function () {
+            // AJAX : 외부데이터 활용 불가
+            // Cross-Domain AJAX : 외부데이터를 활용하는 AJAX
+            // $.ajax({
+            //     url: "http://openapi.seoul.go.kr:8088/575a4655496b636839386f58586542/xml/RealtimeCityAir/1/25/",
+            //     success: function(asd){
+            //         alert(asd);
+            //     }
+            // });
+            $.ajax({
+                url: "http://openapi.seoul.go.kr:8088/575a4655496b636839386f58586542/xml/RealtimeCityAir/1/25/",
+                success : function(airData){
+                    $(airData).find("row").each(function (i, s) {
+                        var sa = $(s).find("SAREA_NM").text();
+                        var ms = $(s).find("MSRSTN_NM").text();
+                        var pm = $(s).find("PM").text();
+                        var fpm = $(s).find("FPM").text();
+                        var cai = $(s).find("CAI_GRD").text();
+
+                        var saTd = $("<td></td>").text(sa);
+                        var msTd = $("<td></td>").text(ms);
+                        var pmTd = $("<td></td>").text(pm);
+                        var fpmTd = $("<td></td>").text(fpm);
+                        var caiTd = $("<td></td>").text(cai);
+                        var tr = $("<tr></tr>").append(saTd, msTd, pmTd, fpmTd, caiTd);
+                        $("table").append(tr);
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <th>권역</th>
+            <th>구</th>
+            <th>미세먼지</th>
+            <th>초미세먼지</th>
+            <th>상태</th>
+        </tr>
+    </table>
+</body>
+
+</html>
