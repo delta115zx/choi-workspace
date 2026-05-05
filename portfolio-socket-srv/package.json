@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-socket-srv",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "~4.16.1",
+    "socket.io": "^2.5.1"
+  }
+}
