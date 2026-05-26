@@ -75,3 +75,10 @@ desktop.ini
 .claude/
 *.swp
 *.swo
+
+# ========================
+# 별도 레포지토리 (이 레포에서 제외)
+# ========================
+SOHOBI/
+.claude-plugin/
+.cursor/
