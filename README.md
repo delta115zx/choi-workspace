@@ -9,8 +9,9 @@
 1. [소개](#소개)
 2. [기술 스택](#기술-스택)
 3. [개인 프로젝트](#개인-프로젝트)
-4. [학습 기록](#학습-기록)
-5. [주요 성과 (SOHOBI)](#주요-성과-sohobi)
+4. [ML 알고리즘 직접 구현](#ml-알고리즘-직접-구현-bdaijan27_knn_kmeans_gogo)
+5. [학습 기록](#학습-기록)
+6. [주요 성과 (SOHOBI)](#주요-성과-sohobi)
 
 ---
 
@@ -134,7 +135,30 @@ ES6+, React 생태계, 인증/인가, 비동기 통신 심화.
 
 ---
 
-### 데이터 분석 & AI (`BDAI/`)
+### ML 알고리즘 직접 구현 (`BDAI/Jan27_kNN_kMeans_gogo/`)
+
+라이브러리 없이 순수 Python으로 핵심 ML 알고리즘을 구현한 실습 파일.
+
+#### kNN — `p01_kNN.py`
+
+- 유클리드 거리 계산 함수 `calcDistance()` 직접 구현 (`sqrt((x1-x2)² + (y1-y2)²)`)
+- 거리 정렬 → 상위 k개 라벨 카운트 → 다수결 분류까지 전 과정 직접 작성
+- 정규화 필요성(비행기 가격 vs 아이스크림 가격 스케일 차이) 주석으로 이해 기록
+- 같은 데이터를 이후 `sklearn.KNeighborsClassifier`로 재구현하여 결과 비교
+
+#### kMeans — `p02_kMeans.py`
+
+- 알고리즘 전체를 4개 함수로 직접 분해 구현:
+  - `makeRandomDot(k)` — 랜덤 초기 중심점 k개 생성
+  - `calcDistance(feature, rDot)` — 전체 데이터 × 중심점 거리 행렬 계산
+  - `grouping(dis, feature)` — 최소 거리 중심점으로 그룹 배정
+  - `makeMeanDot(nGroups)` — 각 그룹 내 좌표 평균으로 중심점 재계산
+- `while oGroup == nGroup` 수렴 조건으로 반복 종료
+- 같은 데이터를 `sklearn.KMeans`로 재구현하여 결과 비교
+
+---
+
+### 데이터 분석 (`BDAI/`)
 
 NumPy · Pandas · 시각화 → 머신러닝 전 과정 실습.
 
@@ -151,9 +175,37 @@ NumPy · Pandas · 시각화 → 머신러닝 전 과정 실습.
 
 ### 머신러닝 / 딥러닝 (`MSAML/`)
 
-PyTorch CNN, TensorFlow, NLP, 이미지 처리, 추천 시스템까지 Jupyter Notebook 50+ 실습.
+Jupyter Notebook 50+ 파일. 알고리즘 원리 이해 → 저수준 구현 → 고수준 라이브러리 활용 순서로 진행.
 
-주요 주제: `CNN 이미지 분류`, `감성 분석`, `시계열 예측`, `협업 필터링 추천`
+#### 머신러닝
+
+| 파일 | 알고리즘 | 구현 방식 | 내용 |
+|------|----------|-----------|------|
+| `Jan26_1_MachineLearning/p01_kNN_movie.ipynb` | kNN | sklearn | 영화 장르 분류 (BDAI 직접 구현과 결과 비교) |
+| `Jan26_1_MachineLearning/p02_MSAML_BackEnd.ipynb` | kNN | sklearn + MLflow | 모델 학습 → MLflow 저장 → Azure ML 배포 |
+| `Jan27_1_MachineLearning/p01_kMeans_movie.ipynb` | kMeans | sklearn | 영화 데이터 군집화 |
+| `Jan27_1_MachineLearning/p02_subwayGrouping.ipynb` | kMeans | sklearn | 지하철 역 타/내리 데이터를 붐빔·평범·한산 3그룹으로 분류 |
+| `Jan28_1_MachineLearning/p01_naiveBayes_sentence.ipynb` | Naive Bayes | sklearn (MultinomialNB) | CountVectorizer + 문장 욕설/정상 분류 |
+| `Jan28_1_MachineLearning/p04_aPriori_mart.ipynb` | Apriori | apyori | 연관규칙 분석, 치킨 구매자의 맥주·소주 구매 확률 |
+
+#### 딥러닝 — 저수준 구현 (TensorFlow 1.x)
+
+TensorFlow 1.x API로 가중치·손실함수·옵티마이저를 직접 구성.
+
+| 파일 | 내용 |
+|------|------|
+| `Jan28_2_DeepLearning/p02_tensorflow_regression.ipynb` | **선형 회귀** — `tf.Variable(a, b)` 직접 정의, MSE 손실함수, AdamOptimizer 1000회 반복 → `y = 9.66x - 0.028` 도출 |
+| `Jan29_1_DeepLearning/p03_tensorflow_ANN.ipynb` | **ANN** — One-hot 인코딩, `tf.matmul(x, W) + b` 행렬 곱 직접 작성, softmax_cross_entropy 손실함수, 1000 epoch |
+
+#### 딥러닝 — 고수준 구현 (TensorFlow 2.x Keras / PyTorch)
+
+| 파일 | 프레임워크 | 내용 |
+|------|-----------|------|
+| `Jan30_1_DeepLearning/p01_tensorflow2_DNN.ipynb` | TF2 Keras | DNN — Dense(100→80→90→2, relu/softmax), Adam |
+| `Jan30_1_DeepLearning/p04_pyTorch_regression.ipynb` | PyTorch | 선형 회귀 — FloatTensor, `backward()` 역전파, SGD |
+| `Jan30_1_DeepLearning/p05_pyTorch_zero_grad.ipynb` | PyTorch | Gradient 누적 문제 및 `zero_grad()` 필요성 실험 |
+| `Jan30_1_DeepLearning/p06_pyTorch_DNN.ipynb` | PyTorch | DNN — `nn.Sequential`, Linear(2→100→80→50→2), CrossEntropyLoss, Adam |
+| `Feb02_1_DeepLearning/p01_pyTorch_CNN.ipynb` | PyTorch | **CNN 음식 분류** — Conv2d 4층(3→1000→500→100→50ch, 커널 5×5), 분식 5종(떡볶이·김밥·오뎅·튀김·순대) 25장 학습, 테스트 정확도 75% |
 
 ---
 
