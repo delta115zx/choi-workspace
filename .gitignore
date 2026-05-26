@@ -77,8 +77,12 @@ desktop.ini
 *.swo
 
 # ========================
-# 별도 레포지토리 (이 레포에서 제외)
+# 별도 레포지토리 / 제외 폴더
 # ========================
 SOHOBI/
 .claude-plugin/
 .cursor/
+portfolio.jsx
+portfolio-socket-srv/
+CHOI/locationAgent/
+java/

@@ -64,17 +64,27 @@
 
 ---
 
-### 3. 음식점 업종 분류기 (`CHOI/locationAgent_DB/db/`)
+### 3. 개인 유틸리티 라이브러리 (`lib/`)
 
-> 공공데이터 API + 상호명 기반 업종 세부 분류 스크립트
+> 학습 과정에서 반복 사용하는 기능을 직접 라이브러리로 패키징
+
+학원 수업 중 "자주 쓸 것 같은 기능을 따로 정리해서 프로젝트마다 갖고 다닌다"는 개념을 실천한 폴더.  
+라이브러리와 프레임워크의 차이를 이해하고, 직접 제작해 재사용한 경험.
+
+**JavaScript (`lib/JavaScript/Choi/`)**
 
 | 파일 | 설명 |
 |------|------|
-| `fetch_sclscode.py` | 소상공인 상가정보 API로 서울시 음식업종 소분류 코드 페이지네이션 수집 (429 재시도 포함) |
-| `type_classifier.py` | 상호명 키워드 매칭으로 분식·양식을 14/9개 세부 타입으로 분류, 행정동별 집계 및 미보유 타입 탐지 |
+| `choiValidChecker.js` | Vanilla JS 폼 유효성 검사 라이브러리 — `isEmpty`, `lessThen`, `containsHangul`, `notEqual`, `isNotType` 등 |
+| `choiValidCheckerReact.js` | React용 버전 — 동일 함수를 ES Module `export`로 재작성, `value` 직접 받도록 인터페이스 변경 |
 
-- **데이터 출처:** 공공데이터포털 소상공인 상가정보 API (`apis.data.go.kr`)
-- **입력 데이터:** 서울특별시 일반음식점 CSV (`식품_일반음식점_서울특별시.csv`)
+**Python (`lib/Python/Choi/`)**
+
+| 파일 | 설명 |
+|------|------|
+| `choiDBManager.py` | OracleDB 연결·커서 생성/종료를 정적 메서드로 묶은 DB 유틸 클래스 |
+| `ChoiStringCleaner.py` | 네이버·카카오 API 응답의 HTML 태그·특수문자 제거 (`<b>`, `&quot;` 등) |
+| `ChoiFileManager.py` | FastAPI 비동기 파일 업로드 유틸 — UUID/날짜 기반 파일명 변환, 용량 제한 처리 |
 
 ---
 
