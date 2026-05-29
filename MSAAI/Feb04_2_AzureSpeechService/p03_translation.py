@@ -1,13 +1,17 @@
+import os
 from azure.cognitiveservices.speech import ResultReason
 from azure.cognitiveservices.speech.audio import AudioConfig
 from azure.cognitiveservices.speech.translation import (
     SpeechTranslationConfig,
     TranslationRecognizer,
 )
+from dotenv import load_dotenv
+
+load_dotenv()
 
 stc = SpeechTranslationConfig(
-    subscription="Boz5eOExDryVTiU3oV1ttLdChUORqlhNHE2IFmflvEHNhJzxFF9LJQQJ99CBACHYHv6XJ3w3AAAYACOG6qJS",
-    region="eastus2",
+    subscription=os.environ["AZURE_SPEECH_KEY"],
+    region=os.getenv("AZURE_SPEECH_REGION", "eastus2"),
 )
 stc.speech_recognition_language = "ko-KR"
 stc.add_target_language("en")

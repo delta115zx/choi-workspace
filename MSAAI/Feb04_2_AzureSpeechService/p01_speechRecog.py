@@ -1,11 +1,14 @@
 # pip install azure-cognitiveservices-speech
+import os
 from azure.cognitiveservices.speech import SpeechConfig, SpeechRecognizer, ResultReason
 from azure.cognitiveservices.speech.audio import AudioConfig
+from dotenv import load_dotenv
 
+load_dotenv()
 
 sc = SpeechConfig(
-    subscription="6tH4fnGnFe97L67g9DozhOCYhW1z0KhB9vn7aRh3NF35IeeQwlrWJQQJ99CBACHYHv6XJ3w3AAAYACOGBujn",
-    region="eastus2",
+    subscription=os.environ["AZURE_SPEECH_KEY"],
+    region=os.getenv("AZURE_SPEECH_REGION", "eastus2"),
 )
 sc.speech_recognition_language = "ko-KR"
 

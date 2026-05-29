@@ -1,9 +1,13 @@
 # pip install azure-ai-textanalytics==5.2.0
+import os
 from azure.ai.textanalytics import TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
+from dotenv import load_dotenv
 
-key = "6dnAclK3gqbzuqiNkpq6qchKbAGwFURS14YtJMcSUJkZ3ZSir4YZJQQJ99CBACHYHv6XJ3w3AAAaACOGReC3"
-endpoint = "https://choils.cognitiveservices.azure.com/"
+load_dotenv()
+
+key = os.environ["AZURE_LANGUAGE_KEY"]
+endpoint = os.environ["AZURE_LANGUAGE_ENDPOINT"]
 
 tac = TextAnalyticsClient(endpoint, AzureKeyCredential(key))
 

@@ -1,11 +1,14 @@
 import os
 from openai import AzureOpenAI
+from dotenv import load_dotenv
 
-endpoint = "https://student02-11-2138-resource.cognitiveservices.azure.com/"
+load_dotenv()
+
+endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
 model_name = "gpt-4.1-mini"
 deployment = "gpt-4.1-mini"
 
-subscription_key = "8H9hpm79eW27SRapvN6vT5vbnUH8esvYS8rToIFX7WMo6psETm9BJQQJ99CBACHYHv6XJ3w3AAAAACOGBh1S"
+subscription_key = os.environ["AZURE_OPENAI_API_KEY"]
 api_version = "2024-12-01-preview"
 
 client = AzureOpenAI(
@@ -29,18 +32,18 @@ while True:
                 {
                     "type": "azure_search",
                     "parameters": {
-                        "endpoint": "https://choiasearch.search.windows.net",  # search service쪽 개요에 있는 URL
-                        "index_name": "choiindex",  # 아까 본인이 쓴
+                        "endpoint": os.environ["AZURE_SEARCH_ENDPOINT"],
+                        "index_name": os.environ["AZURE_SEARCH_INDEX"],
                         "authentication": {
                             "type": "api_key",
-                            "key": "RhKwTUuvwD3tzaCaqHEldvWirxZWeEeI7IunFcHLbbAzSeDe7rtD",  # search service쪽 설정 - 키 - 기본 관리자 키
+                            "key": os.environ["AZURE_SEARCH_KEY"],
                         },
                         "embedding_dependency": {
                             "type": "endpoint",
-                            "endpoint": "https://student02-11-2138-resource.cognitiveservices.azure.com/openai/deployments/gpt-4.1-mini/chat/completions?api-version=2025-01-01-preview",  # 내 자산 - 모델+엔드포인트 - 엔드포인트
+                            "endpoint": os.environ["AZURE_OPENAI_ENDPOINT"],
                             "authentication": {
                                 "type": "api_key",
-                                "key": "8H9hpm79eW27SRapvN6vT5vbnUH8esvYS8rToIFX7WMo6psETm9BJQQJ99CBACHYHv6XJ3w3AAAAACOGBh1S",  # 내 자산 - 모델+엔드포인트 - 키
+                                "key": os.environ["AZURE_OPENAI_API_KEY"],
                             },
                         },
                     },

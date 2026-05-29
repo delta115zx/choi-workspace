@@ -1,12 +1,16 @@
 import json
+import os
 from openai import AzureOpenAI
 import requests
+from dotenv import load_dotenv
 
-endpoint = "https://student02-11-2138-resource.cognitiveservices.azure.com/"
+load_dotenv()
+
+endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
 model_name = "gpt-4.1-mini"
 deployment = "gpt-4.1-mini"
 
-subscription_key = "8H9hpm79eW27SRapvN6vT5vbnUH8esvYS8rToIFX7WMo6psETm9BJQQJ99CBACHYHv6XJ3w3AAAAACOGBh1S"
+subscription_key = os.environ["AZURE_OPENAI_API_KEY"]
 api_version = "2024-12-01-preview"
 
 client = AzureOpenAI(

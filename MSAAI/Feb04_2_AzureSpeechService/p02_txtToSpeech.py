@@ -1,9 +1,13 @@
+import os
 from azure.cognitiveservices.speech import SpeechConfig, SpeechSynthesizer, ResultReason
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
+from dotenv import load_dotenv
+
+load_dotenv()
 
 sc = SpeechConfig(
-    subscription="Boz5eOExDryVTiU3oV1ttLdChUORqlhNHE2IFmflvEHNhJzxFF9LJQQJ99CBACHYHv6XJ3w3AAAYACOG6qJS",
-    region="eastus2",
+    subscription=os.environ["AZURE_SPEECH_KEY"],
+    region=os.getenv("AZURE_SPEECH_REGION", "eastus2"),
 )
 aoc = AudioOutputConfig(True)
 sc.speech_synthesis_voice_name = "ko-KR-HyunsuNeural"

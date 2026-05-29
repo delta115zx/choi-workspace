@@ -1,9 +1,13 @@
+import os
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures
 from azure.core.credentials import AzureKeyCredential
+from dotenv import load_dotenv
 
-key = "ERkMkD4YKfCZ0em4iNk2aECd7bYoS7v0QF9i6P8ZS5YwTdXcrZLPJQQJ99CBACYeBjFXJ3w3AAAFACOG8WEO"
-endpoint = "https://choicvvv.cognitiveservices.azure.com/"
+load_dotenv()
+
+key = os.environ["AZURE_CV_KEY"]
+endpoint = os.environ["AZURE_CV_ENDPOINT"]
 iac = ImageAnalysisClient(endpoint, AzureKeyCredential(key))
 
 f = open("C:/Choi/menu.png", "rb")
@@ -52,7 +56,7 @@ print("-----")
 from azure.ai.translation.text import TextTranslationClient, TranslatorCredential
 from azure.ai.translation.text.models import InputTextItem
 
-key = "6eoOH0cGTDtr3TDzwrJ43ZS2bOd4hQaxE0Nvk2c5UKXW4xvfj5aIJQQJ99CBACHYHv6XJ3w3AAAbACOGZfhm"
+key = os.environ["AZURE_TRANSLATOR_KEY"]
 endpoint = "https://api.cognitive.microsofttranslator.com/"
 region = "eastus2"
 
@@ -73,8 +77,8 @@ from azure.cognitiveservices.speech.audio import AudioConfig
 
 
 sc = SpeechConfig(
-    subscription="6tH4fnGnFe97L67g9DozhOCYhW1z0KhB9vn7aRh3NF35IeeQwlrWJQQJ99CBACHYHv6XJ3w3AAAYACOGBujn",
-    region="eastus2",
+    subscription=os.environ["AZURE_SPEECH_KEY"],
+    region=os.getenv("AZURE_SPEECH_REGION", "eastus2"),
 )
 sc.speech_recognition_language = "ko-KR"
 
@@ -96,8 +100,8 @@ from azure.cognitiveservices.speech import SpeechConfig, SpeechSynthesizer, Resu
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
 
 sc = SpeechConfig(
-    subscription="6tH4fnGnFe97L67g9DozhOCYhW1z0KhB9vn7aRh3NF35IeeQwlrWJQQJ99CBACHYHv6XJ3w3AAAYACOGBujn",
-    region="eastus2",
+    subscription=os.environ["AZURE_SPEECH_KEY"],
+    region=os.getenv("AZURE_SPEECH_REGION", "eastus2"),
 )
 aoc = AudioOutputConfig(True)
 sc.speech_synthesis_voice_name = "ko-KR-HyunsuNeural"

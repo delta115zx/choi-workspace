@@ -1,10 +1,14 @@
 # pip install azure-ai-vision-imageanalysis
+import os
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures
 from azure.core.credentials import AzureKeyCredential
+from dotenv import load_dotenv
 
-key = "BcBaFN81kh9OhXuV0Go9qvr4bqaw2oZaL1SxkCqJLRG86zcyMKRzJQQJ99CBACYeBjFXJ3w3AAAFACOGyyWc"
-endpoint = "https://choicv.cognitiveservices.azure.com/"
+load_dotenv()
+
+key = os.environ["AZURE_CV_KEY"]
+endpoint = os.environ["AZURE_CV_ENDPOINT"]
 iac = ImageAnalysisClient(endpoint, AzureKeyCredential(key))
 
 imgURL = "https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5002%2F2023%2F12%2F31%2F0002500994_001_20231231163601958.jpg&type=sc960_832"

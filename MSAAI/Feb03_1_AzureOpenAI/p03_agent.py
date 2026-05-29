@@ -8,10 +8,14 @@
 # az login -> 로그인 하고나서
 # python p03_agent.py로 실행
 
+import os
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
+from dotenv import load_dotenv
 
-myEndpoint = "https://student02-11-2138-resource.services.ai.azure.com/api/projects/student02_11-2138"
+load_dotenv()
+
+myEndpoint = os.environ["AZURE_PROJECT_ENDPOINT"]
 
 project_client = AIProjectClient(
     endpoint=myEndpoint,

@@ -1,10 +1,14 @@
 # pip install azure-ai-translation-text==1.0.0b1
+import os
 from azure.ai.translation.text import TextTranslationClient, TranslatorCredential
 from azure.ai.translation.text.models import InputTextItem
+from dotenv import load_dotenv
 
-key = "6eoOH0cGTDtr3TDzwrJ43ZS2bOd4hQaxE0Nvk2c5UKXW4xvfj5aIJQQJ99CBACHYHv6XJ3w3AAAbACOGZfhm"
+load_dotenv()
+
+key = os.environ["AZURE_TRANSLATOR_KEY"]
 endpoint = "https://api.cognitive.microsofttranslator.com/"
-region = "eastus2"
+region = os.getenv("AZURE_TRANSLATOR_REGION", "eastus2")
 
 tc = TranslatorCredential(key, region)
 ttc = TextTranslationClient(credential=tc, endpoint=endpoint)

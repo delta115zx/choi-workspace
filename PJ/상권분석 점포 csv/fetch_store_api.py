@@ -10,8 +10,11 @@ import requests
 import csv
 import os
 import time
+from dotenv import load_dotenv
 
-API_KEY    = "52414b6f6164656c363261586a4e4f"
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
+
+API_KEY    = os.environ["SEOUL_API_KEY"]
 SERVICE    = "VwsmAdstrdStorW"
 BASE_URL   = f"http://openapi.seoul.go.kr:8088/{API_KEY}/json/{SERVICE}"
 OUTPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "store_adstrd.csv")

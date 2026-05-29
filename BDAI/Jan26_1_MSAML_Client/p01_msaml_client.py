@@ -2,8 +2,12 @@
 # pip install azure-ai-ml
 # pip install azure-identity
 #####
+import os
 import urllib.request
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Request data goes here
 # The example below assumes JSON formatting which may be updated
@@ -16,9 +20,8 @@ data = {
 
 body = str.encode(json.dumps(data))
 
-url = "https://ccc-jerop.eastus2.inference.ml.azure.com/score"
-# Replace this with the primary/secondary key, AMLToken, or Microsoft Entra ID token for the endpoint
-api_key = "9ERS7blXIATaM18lcLUlD74WkyhwWpimRg8WMdOzBkLixc67nogrJQQJ99CAAAAAAAAAAAAAINFRAZMLKrX8"
+url = os.environ["AZURE_ML_ENDPOINT"]
+api_key = os.environ["AZURE_ML_API_KEY"]
 if not api_key:
     raise Exception("A key should be provided to invoke the endpoint")
 

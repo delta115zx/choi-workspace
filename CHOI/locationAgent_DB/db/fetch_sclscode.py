@@ -5,13 +5,17 @@ divId=ctprvnCd, key=11 (서울) + 중분류 필터로 소분류 현황 파악
 import json
 import sys
 import time
+import os
 import urllib.request
 import urllib.parse
 from collections import Counter
+from dotenv import load_dotenv
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-API_KEY = "f2ba91455caa0e836821e2617c25a08a482bdfc2d99a6342ff7ec7503a3a8697"
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../../.env"))
+
+API_KEY = os.environ["SGNG_API_KEY"]
 BASE_URL = "https://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong"
 
 FOOD_MCLS = [

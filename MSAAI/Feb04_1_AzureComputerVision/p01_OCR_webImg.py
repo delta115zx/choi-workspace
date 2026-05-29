@@ -1,13 +1,17 @@
 # pip install azure-cognitiveservices-vision-computervision
 # pip install pillow
 
+import os
 from time import sleep
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
 from msrest.authentication import CognitiveServicesCredentials
+from dotenv import load_dotenv
 
-key = "BcBaFN81kh9OhXuV0Go9qvr4bqaw2oZaL1SxkCqJLRG86zcyMKRzJQQJ99CBACYeBjFXJ3w3AAAFACOGyyWc"
-endpoint = "https://choicv.cognitiveservices.azure.com/"
+load_dotenv()
+
+key = os.environ["AZURE_CV_KEY"]
+endpoint = os.environ["AZURE_CV_ENDPOINT"]
 
 cvc = ComputerVisionClient(endpoint, CognitiveServicesCredentials(key))
 

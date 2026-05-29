@@ -1,9 +1,13 @@
+import os
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
 from azure.ai.vision.imageanalysis.models import VisualFeatures
 from azure.core.credentials import AzureKeyCredential
+from dotenv import load_dotenv
 
-key = "BcBaFN81kh9OhXuV0Go9qvr4bqaw2oZaL1SxkCqJLRG86zcyMKRzJQQJ99CBACYeBjFXJ3w3AAAFACOGyyWc"
-endpoint = "https://choicv.cognitiveservices.azure.com/"
+load_dotenv()
+
+key = os.environ["AZURE_CV_KEY"]
+endpoint = os.environ["AZURE_CV_ENDPOINT"]
 iac = ImageAnalysisClient(endpoint, AzureKeyCredential(key))
 
 f = open("C:/Choi/자원2023/image/back4.jpg", "rb")

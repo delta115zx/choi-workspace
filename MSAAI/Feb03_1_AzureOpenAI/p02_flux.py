@@ -1,14 +1,18 @@
 # 필수 패키지 설치: 'pip install requests azure-identity'
+import os
 import requests
 import base64
 from PIL import Image
 from io import BytesIO
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # 이러한 환경 변수를 설정하거나 다음 값을 편집해야 합니다.
-endpoint = "https://stude-ml5zsw3w-swedencentral.services.ai.azure.com/openai/deployments/FLUX-1.1-pro/images/generations?api-version=2025-04-01-preview"
+endpoint = os.environ["FLUX_ENDPOINT"]
 deployment = "FLUX-1.1-pro"
 api_version = "2025-04-01-preview"
-subscription_key = "24jvqbn0DHKAaJsXH1vVlcJZzgzLUuIkSjA56aTnG8wM0kBTMO8tJQQJ99CBACfhMk5XJ3w3AAAAACOGjXtR"
+subscription_key = os.environ["FLUX_API_KEY"]
 
 def decode_and_save_image(b64_data, output_filename):
   image = Image.open(BytesIO(base64.b64decode(b64_data)))

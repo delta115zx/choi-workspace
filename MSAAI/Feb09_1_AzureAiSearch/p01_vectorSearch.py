@@ -1,20 +1,24 @@
+import os
 from fastapi import FastAPI
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 from openai import AzureOpenAI
 import traceback
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
-# 1. 설정 정보 (Azure AI Search) - 사용자 제공 값 적용
-sEndpoint = "https://choiasearchhh.search.windows.net"
-sKey = "5GFdDYE4Bh23nl7ryfuRLqqW7gI9bT32tPyV6uQx3DAzSeD1B2b5"
-indexName = "jobs-index"
+# 1. 설정 정보 (Azure AI Search)
+sEndpoint = os.environ["AZURE_SEARCH_ENDPOINT"]
+sKey = os.environ["AZURE_SEARCH_KEY"]
+indexName = os.getenv("AZURE_SEARCH_INDEX", "jobs-index")
 
-# 2. 설정 정보 (Azure OpenAI) - 사용자 제공 값 적용
-oEndpoint = "https://student02-11-1604-resource.cognitiveservices.azure.com"
-oKey = "BQrdUVZyMVUpWd6Xtyvb7BAixaLikbxZlCzF5Zoj98f2pWYR6tJfJQQJ99CBACHYHv6XJ3w3AAAAACOGSqpw"
+# 2. 설정 정보 (Azure OpenAI)
+oEndpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
+oKey = os.environ["AZURE_OPENAI_API_KEY"]
 oEmbeddingDeployment = "text-embedding-3-small"
 
 # 클라이언트 초기화

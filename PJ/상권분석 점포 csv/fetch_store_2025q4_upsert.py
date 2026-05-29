@@ -11,9 +11,12 @@ import os
 import time
 import psycopg2
 import psycopg2.extras
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
 # ── API 설정 ────────────────────────────────────────────────
-API_KEY   = "52414b6f6164656c363261586a4e4f"
+API_KEY   = os.environ["SEOUL_API_KEY"]
 SERVICE   = "VwsmAdstrdStorW"
 BASE_URL  = f"http://openapi.seoul.go.kr:8088/{API_KEY}/json/{SERVICE}"
 QUARTER   = "20254"   # 2025년 4분기
@@ -23,11 +26,11 @@ OUTPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "store_ads
 
 # ── PostgreSQL 설정 ─────────────────────────────────────────
 DB_CONFIG = {
-    "host":     "sohobi-db-prod.postgres.database.azure.com",
-    "port":     5432,
-    "dbname":   "sohobi",
-    "user":     "sohobi_admin",
-    "password": "MSSAY2-2",
+    "host":     os.environ["PG_HOST"],
+    "port":     int(os.getenv("PG_PORT", "5432")),
+    "dbname":   os.getenv("PG_DBNAME", "sohobi"),
+    "user":     os.environ["PG_USER"],
+    "password": os.environ["PG_PASSWORD"],
     "sslmode":  "require",
 }
 

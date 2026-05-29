@@ -4,13 +4,17 @@ Oracle DB 전체 덤프 스크립트
 출력: db_backup/delta115_dump.sql
 """
 import oracledb
+import os
 from datetime import datetime
+from dotenv import load_dotenv
 
-HOST = "10.1.92.102"
-PORT = 1521
-SID  = "XE"
-USER = "delta115"
-PASS = "cjy0115"
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
+
+HOST = os.getenv("ORACLE_HOST", "10.1.92.102")
+PORT = int(os.getenv("ORACLE_PORT", "1521"))
+SID  = os.getenv("ORACLE_SID", "XE")
+USER = os.environ["ORACLE_USER"]
+PASS = os.environ["ORACLE_PASS"]
 OUT  = "delta115_dump.sql"
 
 conn = oracledb.connect(user=USER, password=PASS, dsn=f"{HOST}:{PORT}/{SID}")
