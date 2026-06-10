@@ -8,6 +8,9 @@ azure-search-documents==11.6.0
 # Azure OpenAI (임베딩 생성)
 openai==2.26.0
 
+# .env 파일 로드
+python-dotenv==1.0.1
+
 # AI 오케스트레이션 — p04_vectorSearchSK.py (SK 플러그인 연동)
 semantic-kernel==1.40.0
 
